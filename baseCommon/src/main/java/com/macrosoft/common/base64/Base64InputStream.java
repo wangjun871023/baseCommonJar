@@ -11,8 +11,8 @@ public class Base64InputStream extends InputStream
 
   private boolean eof = false;
 
-  public Base64InputStream(InputStream inputStream)
-  {
+  public Base64InputStream(InputStream inputStream){
+  
     this.inputStream = inputStream;
   }
 
@@ -31,9 +31,9 @@ public class Base64InputStream extends InputStream
     return this.buffer[(this.bufferCounter++)];
   }
 
-  private void acquire()
+  private void acquire(){
     throws IOException
-  {
+  
     char[] four = new char[4];
     int i = 0;
     do {

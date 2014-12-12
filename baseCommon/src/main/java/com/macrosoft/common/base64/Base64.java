@@ -11,14 +11,14 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Base64 加密/解密
+ * Base64 加密/解密算法
  * 
  * @author 呆呆
  */
 public class Base64 {
 	
 	/**
-	 * 加密
+	 * 为byte[]数组加密 默认以ASCII编码方式加密 
 	 * @param bytes
 	 * @return
 	 * @throws RuntimeException
@@ -39,7 +39,7 @@ public class Base64 {
 	}
 
 	/**
-	 * 解密
+	 * 为String字符串解密 默认以ASCII编码方式解密
 	 * @param str
 	 * @return
 	 * @throws RuntimeException
