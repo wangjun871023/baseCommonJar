@@ -5,7 +5,7 @@
  * 
  * $Id: ConvertUtils.java 1211 2010-09-10 16:20:45Z xiaoxiu $
  */
-package com.macrosoft.common.Convert;
+package com.macrosoft.common.convert;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.lang.StringUtils;
 
-import com.macrosoft.common.Reflection.ReflectionUtils;
+import com.macrosoft.common.reflection.ReflectionUtils;
 
 
 public class ConvertUtils {

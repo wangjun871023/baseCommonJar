@@ -1,4 +1,4 @@
-package com.macrosoft.common.Identities;
+package com.macrosoft.common.identities;
 
 import java.security.SecureRandom;
 import java.util.UUID;

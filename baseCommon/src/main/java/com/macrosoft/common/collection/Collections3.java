@@ -15,7 +15,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.macrosoft.common.Reflection.ReflectionUtils;
+import com.macrosoft.common.reflection.ReflectionUtils;
 
 /**
  * Collections工具集.
