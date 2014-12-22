@@ -24,10 +24,11 @@ import java.util.zip.ZipOutputStream;
 public class ZipUtils {
 	static final int BUFFER = 1024;// 1K
 	static final int BUFFERBIG = 524288;// 512K
-	static final String ZIPSUFFIX = ".zip"; //zip后缀
+	static final String ZIPSUFFIX = ".zip"; // zip后缀
 
 	/**
-	 * 使一个文件路径以文件
+	 * 使一个文件路径以文件分隔符结尾
+	 * 
 	 * @param filePath
 	 * @return
 	 */
@@ -41,95 +42,13 @@ public class ZipUtils {
 		return filePath + File.separator;
 	}
 
-	public static boolean zipFile(String srcPath, String[] inputFileName,
-			String desPath, String desFileName) {
-		if (inputFileName == null) {
-			return false;
-		}
-		srcPath = filePathEndWithSeparator(srcPath);
-		File file = new File(srcPath);
-		if ((!file.exists()) || (file.isFile())) {
-			return false;
-		}
-		ZipOutputStream zos = null;
-		try {
-			desPath = filePathEndWithSeparator(desPath) + desFileName;
-			zos = new ZipOutputStream(new FileOutputStream(desPath));
-			ZipEntry ze = null;
-			byte[] buf = new byte[1024];
-			int readLen = 0;
-			for (int i = 0; i < inputFileName.length; i++) {
-				File f = new File(srcPath + inputFileName[i]);
-				if (!f.exists()) {
-					continue;
-				}
-				ze = new ZipEntry(f.getName());
-				ze.setSize(f.length());
-				ze.setTime(f.lastModified());
-				ze.setCrc(0L);
-				CRC32 crc = new CRC32();
-				crc.reset();
-				zos.putNextEntry(ze);
-				InputStream is = new BufferedInputStream(new FileInputStream(f));
-				while ((readLen = is.read(buf, 0, 1024)) != -1) {
-					zos.write(buf, 0, readLen);
-					crc.update(buf, 0, readLen);
-				}
-				ze.setCrc(crc.getValue());
-				is.close();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (zos != null) {
-				try {
-					zos.close();
-					zos = null;
-				} catch (IOException e) {
-					zos = null;
-					e.printStackTrace();
-				}
-			}
-		}
-		return true;
-	}
-
-	public static void zip(String sourceDir, String zipFile) {
-		if (sourceDir == null) {
-			throw new IllegalArgumentException("参数异常,sourceDir=" + sourceDir);
-		}
-		if (zipFile == null) {
-			throw new IllegalArgumentException("参数异常,zipFile=" + zipFile);
-		}
-		ZipOutputStream zos = null;
-		try {
-			zos = new ZipOutputStream(new FileOutputStream(zipFile));
-			File file = new File(sourceDir);
-			String basePath = null;
-			if (file.isDirectory())
-				basePath = file.getPath().substring(0,
-						file.getPath().lastIndexOf(File.separator));
-			else {
-				basePath = file.getParent();
-			}
-			zipFile(sourceDir, basePath, zos);
-			zos.closeEntry();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (zos != null)
-				try {
-					zos.close();
-					zos = null;
-				} catch (IOException e) {
-					zos = null;
-					e.printStackTrace();
-				}
-		}
-	}
-
+	/**
+	 * 递归压缩算法
+	 * 
+	 * @param sourceDir
+	 * @param basePath
+	 * @param zos
+	 */
 	private static void zipFile(String sourceDir, String basePath,
 			ZipOutputStream zos) {
 		InputStream is = null;
@@ -187,6 +106,116 @@ public class ZipUtils {
 		}
 	}
 
+	/**
+	 * 压缩文件，将多个文件同时压缩成一个文件
+	 * 
+	 * @param srcPath
+	 * @param inputFileName
+	 * @param desPath
+	 * @param desFileName
+	 * @return 压缩结果，成功为true，失败为false
+	 */
+	public static boolean zipFile(String srcPath, String[] inputFileName,
+			String desPath, String desFileName) {
+		if (inputFileName == null) {
+			return false;
+		}
+		srcPath = filePathEndWithSeparator(srcPath);
+		File file = new File(srcPath);
+		if ((!file.exists()) || (file.isFile())) {
+			return false;
+		}
+		ZipOutputStream zos = null;
+		try {
+			desPath = filePathEndWithSeparator(desPath) + desFileName;
+			zos = new ZipOutputStream(new FileOutputStream(desPath));
+			ZipEntry ze = null;
+			byte[] buf = new byte[1024];
+			int readLen = 0;
+			for (int i = 0; i < inputFileName.length; i++) {
+				File f = new File(srcPath + inputFileName[i]);
+				if (!f.exists()) {
+					continue;
+				}
+				ze = new ZipEntry(f.getName());
+				ze.setSize(f.length());
+				ze.setTime(f.lastModified());
+				ze.setCrc(0L);
+				CRC32 crc = new CRC32();
+				crc.reset();
+				zos.putNextEntry(ze);
+				InputStream is = new BufferedInputStream(new FileInputStream(f));
+				while ((readLen = is.read(buf, 0, 1024)) != -1) {
+					zos.write(buf, 0, readLen);
+					crc.update(buf, 0, readLen);
+				}
+				ze.setCrc(crc.getValue());
+				is.close();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (zos != null) {
+				try {
+					zos.close();
+					zos = null;
+				} catch (IOException e) {
+					zos = null;
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 将一个目录进行压缩
+	 * 
+	 * @param sourceDir
+	 * @param zipFile
+	 *            压缩后的文件路径
+	 */
+	public static void zip(String sourceDir, String zipFile) {
+		if (sourceDir == null) {
+			throw new IllegalArgumentException("参数异常,sourceDir=" + sourceDir);
+		}
+		if (zipFile == null) {
+			throw new IllegalArgumentException("参数异常,zipFile=" + zipFile);
+		}
+		ZipOutputStream zos = null;
+		try {
+			zos = new ZipOutputStream(new FileOutputStream(zipFile));
+			File file = new File(sourceDir);
+			String basePath = null;
+			if (file.isDirectory())
+				basePath = file.getPath().substring(0,
+						file.getPath().lastIndexOf(File.separator));
+			else {
+				basePath = file.getParent();
+			}
+			zipFile(sourceDir, basePath, zos);
+			zos.closeEntry();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (zos != null)
+				try {
+					zos.close();
+					zos = null;
+				} catch (IOException e) {
+					zos = null;
+					e.printStackTrace();
+				}
+		}
+	}
+
+	/**
+	 * 将一个目录进行压缩
+	 * 
+	 * @param sourceDir
+	 */
 	public static void zip(String sourceDir) {
 		if ((sourceDir == null) || ("".equals(sourceDir.trim()))) {
 			throw new IllegalArgumentException("参数异常,sourceDir=" + sourceDir);
@@ -203,6 +232,13 @@ public class ZipUtils {
 		zip(sourceDir, zipFile);
 	}
 
+	/**
+	 * 将一个目录进行压缩
+	 * 
+	 * @param sourceDir
+	 * @param zipName
+	 *            压缩文件名
+	 */
 	public static void zipWithName(String sourceDir, String zipName) {
 		if ((sourceDir == null) || ("".equals(sourceDir.trim()))) {
 			throw new IllegalArgumentException("参数异常,sourceDir=" + sourceDir);
@@ -219,6 +255,14 @@ public class ZipUtils {
 		}
 	}
 
+	/**
+	 * 解压文件
+	 * 
+	 * @param zipfile
+	 *            解压的文件路径
+	 * @param destDir
+	 *            解压目标文件路径
+	 */
 	public static void unZip(String zipfile, String destDir) {
 		if ((zipfile == null) || ("".equals(zipfile.trim()))) {
 			throw new IllegalArgumentException("参数异常,zipfile=" + zipfile);
@@ -262,6 +306,11 @@ public class ZipUtils {
 		}
 	}
 
+	/**
+	 * 当前文件解压
+	 * 
+	 * @param zipFile
+	 */
 	public static void unZip(String zipFile) {
 		if ((zipFile == null) || ("".equals(zipFile.trim()))) {
 			throw new IllegalArgumentException("参数异常,zipFile=" + zipFile);
@@ -321,6 +370,12 @@ public class ZipUtils {
 		}
 	}
 
+	/**
+	 * 以指定文件名解压
+	 * 
+	 * @param zipfile
+	 * @param filename
+	 */
 	public static void unZipWithName(String zipfile, String filename) {
 		if ((zipfile == null) || ("".equals(zipfile.trim()))) {
 			throw new IllegalArgumentException("参数异常,zipfile=" + zipfile);
