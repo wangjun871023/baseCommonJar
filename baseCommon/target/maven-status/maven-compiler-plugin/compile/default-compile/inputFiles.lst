@@ -1,14 +1,14 @@
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\collection\Collections3.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\json\JacksonJsonImpl.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\base64\Shared.java
-D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\Identities\Identities.java
+D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\identities\Identities.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\json\BaseObject.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\constant\CommonConst.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\json\JsonInterface.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\http\HttpUtils.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\date\DateProvider.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\date\DateUtils.java
-D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\Reflection\ReflectionUtils.java
+D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\reflection\ReflectionUtils.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\upload\UploadUtils.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\base64\Base64InputStream.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\base64\Base64OutputStream.java
@@ -25,7 +25,7 @@ D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\com
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\string\DataTypeUtils.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\file\FileUtils.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\clazz\ClassUtils.java
-D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\Convert\ConvertUtils.java
+D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\convert\ConvertUtils.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\thread\Threads.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\clazz\ObjectCommonUtil.java
 D:\我的文档\文档\git\baseCommon\baseCommon\src\main\java\com\macrosoft\common\exception\Exceptions.java
