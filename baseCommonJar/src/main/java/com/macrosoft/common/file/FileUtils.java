@@ -434,8 +434,14 @@ public class FileUtils {
 				e.printStackTrace();
 			}
 	}
-
-	private static String filePathEndWithSeparator(String filePath) {
+	
+	/**
+	 * 使一个文件路径以文件分隔符结尾
+	 * 
+	 * @param filePath
+	 * @return
+	 */
+	public static String filePathEndWithSeparator(String filePath) {
 		if ((filePath == null) || ("".equals(filePath.trim()))) {
 			throw new IllegalArgumentException("参数异常,zipFile=" + filePath);
 		}

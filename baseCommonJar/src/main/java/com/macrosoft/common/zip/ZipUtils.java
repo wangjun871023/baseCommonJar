@@ -16,6 +16,8 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import com.macrosoft.common.file.FileUtils;
+
 /**
  * zip 解压与压缩工具
  * 
@@ -25,22 +27,6 @@ public class ZipUtils {
 	static final int BUFFER = 1024;// 1K
 	static final int BUFFERBIG = 524288;// 512K
 	static final String ZIPSUFFIX = ".zip"; // zip后缀
-
-	/**
-	 * 使一个文件路径以文件分隔符结尾
-	 * 
-	 * @param filePath
-	 * @return
-	 */
-	private static String filePathEndWithSeparator(String filePath) {
-		if ((filePath == null) || ("".equals(filePath.trim()))) {
-			throw new IllegalArgumentException("参数异常,zipFile=" + filePath);
-		}
-		if (filePath.endsWith(File.separator)) {
-			return filePath;
-		}
-		return filePath + File.separator;
-	}
 
 	/**
 	 * 递归压缩算法
@@ -120,14 +106,14 @@ public class ZipUtils {
 		if (inputFileName == null) {
 			return false;
 		}
-		srcPath = filePathEndWithSeparator(srcPath);
+		srcPath = FileUtils.filePathEndWithSeparator(srcPath);
 		File file = new File(srcPath);
 		if ((!file.exists()) || (file.isFile())) {
 			return false;
 		}
 		ZipOutputStream zos = null;
 		try {
-			desPath = filePathEndWithSeparator(desPath) + desFileName;
+			desPath = FileUtils.filePathEndWithSeparator(desPath) + desFileName;
 			zos = new ZipOutputStream(new FileOutputStream(desPath));
 			ZipEntry ze = null;
 			byte[] buf = new byte[1024];
@@ -224,7 +210,7 @@ public class ZipUtils {
 		String zipFile = null;
 		if (srcFile.isDirectory()) {
 			zipFile = srcFile.getPath() + ".zip";
-			sourceDir = filePathEndWithSeparator(srcFile.getPath());
+			sourceDir = FileUtils.filePathEndWithSeparator(srcFile.getPath());
 		} else {
 			zipFile = sourceDir.substring(0, sourceDir.lastIndexOf("."))
 					+ ".zip";
@@ -249,7 +235,7 @@ public class ZipUtils {
 		zipName = zipName + ".zip";
 		File srcFile = new File(sourceDir);
 		if (srcFile.exists()) {
-			String zipFile = filePathEndWithSeparator(srcFile.getParent())
+			String zipFile = FileUtils.filePathEndWithSeparator(srcFile.getParent())
 					+ zipName;
 			zip(sourceDir, zipFile);
 		}
@@ -269,7 +255,7 @@ public class ZipUtils {
 		}
 		InputStream inputStream = null;
 		try {
-			destDir = filePathEndWithSeparator(destDir);
+			destDir = FileUtils.filePathEndWithSeparator(destDir);
 			ZipFile zipFile = new ZipFile(new File(zipfile));
 			Enumeration enumeration = zipFile.entries();
 			ZipEntry zipEntry = null;
@@ -329,7 +315,7 @@ public class ZipUtils {
 			while ((entry = zis.getNextEntry()) != null) {
 				byte[] data = new byte[1024];
 
-				File outFile = new File(filePathEndWithSeparator(desPath)
+				File outFile = new File(FileUtils.filePathEndWithSeparator(desPath)
 						+ entry.getName());
 				if ((entry.isDirectory()) && (!outFile.exists())) {
 					outFile.mkdirs();
@@ -385,7 +371,7 @@ public class ZipUtils {
 		}
 		File srcFile = new File(zipfile);
 		if (srcFile.exists()) {
-			String filepath = filePathEndWithSeparator(srcFile.getParent())
+			String filepath = FileUtils.filePathEndWithSeparator(srcFile.getParent())
 					+ filename;
 			unZip(zipfile, filepath);
 		}

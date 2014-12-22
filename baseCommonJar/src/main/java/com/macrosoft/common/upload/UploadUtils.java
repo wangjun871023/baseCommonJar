@@ -19,16 +19,6 @@ import com.macrosoft.common.file.FileUtils;
  *
  */
 public class UploadUtils {
-	private static String filePathEndWithSeparator(String filePath) {
-		if ((filePath == null) || ("".equals(filePath.trim()))) {
-			throw new IllegalArgumentException("参数异常,zipFile=" + filePath);
-		}
-		if (filePath.endsWith(File.separator)) {
-			return filePath;
-		}
-		return filePath + File.separator;
-	}
-
 	/**
 	 * 判断文件是否重名
 	 * 
@@ -56,11 +46,11 @@ public class UploadUtils {
 	}
 
 	/**
-	 * 设置文件名
+	 * 当文件名重名时，生成文件名算法
 	 * 
 	 * @param path
-	 * @param fileName
-	 * @param type
+	 * @param fileName 文件名 
+	 * @param type 1=(1)结尾  2=以uuid结尾 
 	 * @return
 	 */
 	public static String setFileName(String path, String fileName, int type) {
@@ -134,9 +124,9 @@ public class UploadUtils {
 	}
 
 	/**
-	 * 上传文件
+	 * 以文件的形式上传文件
 	 * 
-	 * @param formfile
+	 * @param formfile 上传文件
 	 * @param path
 	 * @param filename
 	 * @return
@@ -148,7 +138,7 @@ public class UploadUtils {
 			}
 			filename = filename.trim()
 					+ FileUtils.getFileExtName(formfile.getName());
-			path = filePathEndWithSeparator(path) + filename;
+			path = FileUtils.filePathEndWithSeparator(path) + filename;
 			FileUtils.createFile(path, true);
 			FileUtils.writeFile(new FileInputStream(formfile), path);
 		} catch (Exception e) {
@@ -158,9 +148,9 @@ public class UploadUtils {
 	}
 
 	/**
-	 * 上传文件
+	 * 以数据流的形式上传文件
 	 * 
-	 * @param fileform
+	 * @param fileform 上传文件数据流
 	 * @param filePath
 	 * @return
 	 */
@@ -171,6 +161,12 @@ public class UploadUtils {
 		return FileUtils.streamToFile(fileform, filePath) ? filePath : "";
 	}
 
+	/**
+	 * 下载文件 未完成(wangjun)
+	 * @param filepath
+	 * @param filename
+	 * @param response
+	 */
 	@Deprecated
 	public void downFile(String filepath, String filename,
 			HttpServletResponse response) {
