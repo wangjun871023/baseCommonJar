@@ -22,10 +22,15 @@ import java.util.zip.ZipOutputStream;
  * @author 呆呆
  */
 public class ZipUtils {
-	static final int BUFFER = 1024;
-	static final int BUFFERBIG = 524288;
-	static final String ZIPSUFFIX = ".zip";
+	static final int BUFFER = 1024;// 1K
+	static final int BUFFERBIG = 524288;// 512K
+	static final String ZIPSUFFIX = ".zip"; //zip后缀
 
+	/**
+	 * 使一个文件路径以文件
+	 * @param filePath
+	 * @return
+	 */
 	private static String filePathEndWithSeparator(String filePath) {
 		if ((filePath == null) || ("".equals(filePath.trim()))) {
 			throw new IllegalArgumentException("参数异常,zipFile=" + filePath);
