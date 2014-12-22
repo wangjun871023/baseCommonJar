@@ -5,6 +5,7 @@
 	<artifactId>baseCommon</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>baseCommon</name>
+	<packaging>jar</packaging>
 	<description>baseCommon</description>
 	<dependencies>
 		<dependency>
