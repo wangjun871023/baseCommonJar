@@ -12,9 +12,9 @@ import java.io.InputStream;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -25,8 +25,7 @@ import org.springframework.core.io.ResourceLoader;
  * @author xiao
  */
 public class PropertiesLoader {
-
-	private static Logger logger = LoggerFactory.getLogger(PropertiesLoader.class);
+	protected Log logger = LogFactory.getLog(getClass());
 
 	private static ResourceLoader resourceLoader = new DefaultResourceLoader();
 
@@ -134,16 +133,14 @@ public class PropertiesLoader {
 		Properties props = new Properties();
 
 		for (String location : resourcesPaths) {
-
-			logger.debug("Loading properties file from path:{}", location);
-
 			InputStream is = null;
 			try {
 				Resource resource = resourceLoader.getResource(location);
 				is = resource.getInputStream();
 				props.load(is);
 			} catch (IOException ex) {
-				logger.info("Could not load properties from path:{}, {} ", location, ex.getMessage());
+				ex.printStackTrace();
+				logger.error(ex, ex);
 			} finally {
 				IOUtils.closeQuietly(is);
 			}

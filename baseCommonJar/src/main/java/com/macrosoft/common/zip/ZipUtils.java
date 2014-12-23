@@ -16,6 +16,9 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.macrosoft.common.file.FileUtils;
 
 /**
@@ -24,10 +27,13 @@ import com.macrosoft.common.file.FileUtils;
  * @author 呆呆
  */
 public class ZipUtils {
+	private Log logger = LogFactory.getLog(getClass());
+	
 	static final int BUFFER = 1024;// 1K
 	static final int BUFFERBIG = 524288;// 512K
 	static final String ZIPSUFFIX = ".zip"; // zip后缀
 
+	
 	/**
 	 * 递归压缩算法
 	 * 
