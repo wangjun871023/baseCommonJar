@@ -23,7 +23,7 @@ import com.macrosoft.common.exception.Exceptions;
  * 
  * 支持Hex与Base64两种编码方式.
  * 
- * @author xiao
+ * @author 呆呆
  */
 public class Cryptos {
 
