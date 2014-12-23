@@ -15,6 +15,21 @@ public final class CommonConst {
 	 */
 	public static final String SYS_SPLIT = ";";
 	/**
+	 * 名称分隔符
+	 */
+	public final static String SYS_NAME_SPLIT="$$";
+	//冒号分隔符
+	public final static String SYS_SPLIT_COLON=":";
+	//分号分隔符
+	public final static String SYS_SPLIT_SEMICOLON=";";
+	//,号分隔符
+	public final static String SYS_SPLIT_COMMA=","; 
+	//| 分隔符
+	public final static String SYS_SPLIT_LINE="|"; 
+	
+	
+	
+	/**
 	 * 响应成功
 	 */
 	public static final String RESPONSE_SUCCESS_KEY = "success";
@@ -91,18 +106,7 @@ public final class CommonConst {
 	 */
 	public final static String SYS_ROOT_NAME="根节点"; 
 	
-	/**
-	 * 名称分隔符
-	 */
-	public final static String SYS_NAME_SPLIT="$$";
-	//冒号分隔符
-	public final static String SYS_SPLIT_COLON=":";
-	//分号分隔符
-	public final static String SYS_SPLIT_SEMICOLON=";";
-	//,号分隔符
-	public final static String SYS_SPLIT_COMMA=","; 
-	//| 分隔符
-	public final static String SYS_SPLIT_LINE="|"; 
+
 	//有效数据标记
 	public final static String SYS_USE_FLAG="1";
 	//选中数据标记

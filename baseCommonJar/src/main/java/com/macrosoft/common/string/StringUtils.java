@@ -10,77 +10,51 @@ import com.macrosoft.common.base64.Base64;
 import com.macrosoft.common.constant.CommonConst;
 
 public class StringUtils {
-
+	/**
+	 * StringBuffer是否为空
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public static boolean isEmpty(StringBuffer value) {
 		return (value == null) || (isNull(value.toString()))
 				|| (value.toString().trim().length() == 0);
 	}
 
-	public static boolean isEmpty(Integer value) {
-		return value == null;
-	}
-
-	public static boolean isEmpty(Long value) {
-		return value == null;
-	}
-
-	public static boolean isEmpty(Float value) {
-		return value == null;
-	}
-
-	public static boolean isEmpty(Double value) {
-		return value == null;
-	}
-
-	public static boolean isEmpty(Object[] value) {
-		return value == null;
-	}
-
-	public static boolean isEmpty(List value) {
-		return value == null;
-	}
-
-	public static boolean isNull(Integer str) {
-		return isEmpty(str);
-	}
-
-	public static boolean isNull(Long str) {
-		return isEmpty(str);
-	}
-
-	public static boolean isNull(Float str) {
-		return isEmpty(str);
-	}
-
-	public static boolean isNull(Double str) {
-		return isEmpty(str);
-	}
-
-	public static boolean isNull(Object[] str) {
-		return isEmpty(str);
-	}
-
-	public static boolean isNull(List str) {
-		return isEmpty(str);
-	}
-
-	public static int getWordCount(String str) {
-		int length = 0;
-		if (isEmpty(str) == true) {
-			return length;
+	/**
+	 * 判断字符串是否为空,空是指: null 或 空串 或 全是空格的字符串
+	 * 
+	 * @param a_value
+	 * @return
+	 */
+	public static boolean isEmpty(String str) {
+		if (isNull(str) || str.trim().length() == 0) {
+			return true;
+		} else {
+			return false;
 		}
-		int i = 0;
-		for (int len = str.length(); i < len; i++) {
-			int ascii = Character.codePointAt(str, i);
-			if ((ascii >= 0) && (ascii <= 255))
-				length++;
-			else {
-				length += 2;
-			}
-		}
-		return length;
 	}
 
+	/**
+	 * 判断字符串是否为null对象
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNull(String str) {
+		boolean result = false;
+		if (str == null) {
+			result = true;
+		}
+		return result;
+	}
+
+	/**
+	 * 字符数组是否为空
+	 * 
+	 * @param param
+	 * @return
+	 */
 	public static boolean arrIsEmpty(String[] param) {
 		boolean result = true;
 		if ((param != null) && (param.length > 0)) {
@@ -95,30 +69,154 @@ public class StringUtils {
 		return result;
 	}
 
+	/**
+	 * 如果str为null,给str赋值""
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String checkNull(String str) {
+		if (str == null) {
+			str = "";
+		}
+		return str;
+	}
+
+	/**
+	 * 如果str为null,给str赋值
+	 * 
+	 * @param str
+	 * @param value
+	 * @return
+	 */
+	public static String checkNull(String str, String value) {
+		if (isEmpty(str) && value != null) {
+			str = value;
+		}
+		return str;
+	}
+
+	/**
+	 * 功能描述：是否为空白,包括null和""
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isBlank(String str) {
+		return str == null || str.trim().length() == 0;
+	}
+
+	/**
+	 * 将数组转为String 以默认的分隔符
+	 * 
+	 * @param param
+	 * @return
+	 */
 	public static String arrToString(String[] param) {
 		return arrJoin(param, null);
 	}
 
+	/**
+	 * 将数组转为String 指定的分隔符
+	 * 
+	 * @param param
+	 * @param splitStr
+	 * @return
+	 */
 	public static String arrToString(String[] param, String splitStr) {
 		return arrJoin(param, splitStr);
 	}
 
+	/**
+	 * 数组转换以","分隔的字符串
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public static String arrJoin(String[] param) {
+		StringBuffer result = new StringBuffer("");
+		if (param != null && param.length > 0) {
+			for (int i = 0; i < param.length; i++) {
+				if (i > 0) {
+					result.append(CommonConst.SYS_SPLIT_COMMA);
+				}
+				result.append("'" + param[i] + "'");
+			}
+		}
+		return result.toString();
+	}
+
+	/**
+	 * 数组转换以指定分隔符连接的字符串
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public static String arrJoin(String[] param, String splitStr) {
+		StringBuffer result = new StringBuffer("");
+		if (isEmpty(splitStr) == true) {
+			splitStr = CommonConst.SYS_SPLIT_COLON;
+		}
+		if (param != null && param.length > 0) {
+			int size = param.length;
+			for (int i = 0; i < size; i++) {
+				if (i > 0) {
+					result.append(splitStr);
+				}
+				result.append(param[i]);
+			}
+		}
+		return result.toString();
+	}
+
+	/**
+	 * Base64加密 byte[]数组
+	 * 
+	 * @param bytes
+	 * @return
+	 */
 	public static String encrypt(byte[] bytes) {
 		return Base64.encrypt(bytes);
 	}
 
+	/**
+	 * Base64加密 返回 byte[]数组
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static byte[] unEncrypt(String str) {
 		return Base64.unEncrypt(str);
 	}
 
+	/**
+	 * Base64加密 指定编码集
+	 * 
+	 * @param bytes
+	 * @return
+	 */
 	public static String encode(String str, String encoding) {
 		return Base64.encodeByEncoding(str, encoding);
 	}
 
+	/**
+	 * Base64解密 指定编码集
+	 * 
+	 * @param str
+	 * @param encoding
+	 * @return
+	 */
 	public static String decode(String str, String encoding) {
 		return Base64.decodeByEncoding(str, encoding);
 	}
 
+	/**
+	 * 判断是否超长
+	 * 
+	 * @param str
+	 * @param len
+	 * @return
+	 */
 	public static boolean isOverLen(String str, int len) {
 		boolean result = false;
 		int tempLen = getWordCountReg(str);
@@ -187,12 +285,12 @@ public class StringUtils {
 				return result;
 			}
 
-			if (str.indexOf(":") >= 0) {
-				splitStr = ":";
-			} else if (str.indexOf(";") >= 0) {
-				splitStr = ";";
-			} else if (str.indexOf(",") >= 0) {
-				splitStr = ",";
+			if (str.indexOf(CommonConst.SYS_SPLIT_COLON) >= 0) {
+				splitStr = CommonConst.SYS_SPLIT_COLON;
+			} else if (str.indexOf(CommonConst.SYS_SPLIT_SEMICOLON) >= 0) {
+				splitStr = CommonConst.SYS_SPLIT_SEMICOLON;
+			} else if (str.indexOf(CommonConst.SYS_SPLIT_COMMA) >= 0) {
+				splitStr = CommonConst.SYS_SPLIT_COMMA;
 			}
 
 			result = strToArray(str, splitStr);
@@ -218,7 +316,7 @@ public class StringUtils {
 				return result;
 			}
 			if (splitStr == null) {
-				splitStr = "$$";
+				splitStr = CommonConst.SYS_SPLIT;
 			}
 			StringTokenizer st = new StringTokenizer(str, splitStr);
 			tempList = new ArrayList();
@@ -238,6 +336,68 @@ public class StringUtils {
 		return result;
 	}
 
+	/**
+	 * 将字符串分割成List
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static List strToList(String str) {
+		List result = null;
+		String splitStr = null;
+		try {
+			if (isEmpty(str) == true) {
+				return result;
+			}
+
+			if (str.indexOf(CommonConst.SYS_SPLIT_COLON) >= 0) {
+				splitStr = CommonConst.SYS_SPLIT_COLON;
+			} else if (str.indexOf(CommonConst.SYS_SPLIT_SEMICOLON) >= 0) {
+				splitStr = CommonConst.SYS_SPLIT_SEMICOLON;
+			} else if (str.indexOf(CommonConst.SYS_SPLIT_COMMA) >= 0) {
+				splitStr = CommonConst.SYS_SPLIT_COMMA;
+			}
+
+			result = strToList(str, splitStr);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * 将字符串分割成List
+	 * 
+	 * @param str
+	 * @param splitStr
+	 * @return
+	 */
+	public static List strToList(String str, String splitStr) {
+		List result = null;
+		try {
+			if (isEmpty(str) == true) {
+				return result;
+			}
+			if (splitStr == null) {
+				splitStr = CommonConst.SYS_SPLIT;
+			}
+			StringTokenizer st = new StringTokenizer(str, splitStr);
+			result = new ArrayList();
+			while (st.hasMoreElements() == true)
+				result.add(st.nextToken());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * id是否在数组中
+	 * 
+	 * @param param
+	 * @param id
+	 * @return
+	 */
 	public static boolean idInArr(String[] param, String id) {
 		boolean result = false;
 		if ((param != null) && (param.length > 0) && (!isEmpty(id))) {
@@ -252,48 +412,13 @@ public class StringUtils {
 		return result;
 	}
 
-	public static List strToList(String str) {
-		List result = null;
-		String splitStr = null;
-		try {
-			if (isEmpty(str) == true) {
-				return result;
-			}
-
-			if (str.indexOf(":") >= 0) {
-				splitStr = ":";
-			} else if (str.indexOf(";") >= 0) {
-				splitStr = ";";
-			} else if (str.indexOf(",") >= 0) {
-				splitStr = ",";
-			}
-
-			result = strToList(str, splitStr);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return result;
-	}
-
-	public static List strToList(String str, String splitStr) {
-		List result = null;
-		try {
-			if (isEmpty(str) == true) {
-				return result;
-			}
-			if (splitStr == null) {
-				splitStr = "$$";
-			}
-			StringTokenizer st = new StringTokenizer(str, splitStr);
-			result = new ArrayList();
-			while (st.hasMoreElements() == true)
-				result.add(st.nextToken());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return result;
-	}
-
+	/**
+	 * String配置正则表达式
+	 * 
+	 * @param str
+	 * @param regex
+	 * @return
+	 */
 	public static boolean match(String str, String regex) {
 		boolean result = false;
 		if ((isEmpty(str) == true) || (isEmpty(regex) == true)) {
@@ -301,61 +426,6 @@ public class StringUtils {
 		}
 		result = str.matches(regex);
 		return result;
-	}
-
-	/**
-	 * 判断字符串是否为null对象
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public static boolean isNull(String str) {
-		boolean result = false;
-		if (str == null) {
-			result = true;
-		}
-		return result;
-	}
-
-	/**
-	 * 判断字符串是否为空,空是指: null 或 空串 或 全是空格的字符串
-	 * 
-	 * @param a_value
-	 * @return
-	 */
-	public static boolean isEmpty(String str) {
-		if (isNull(str) || str.trim().length() == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * 如果str为null,给str赋值
-	 * 
-	 * @param str
-	 * @param value
-	 * @return
-	 */
-	public static String checkNull(String str, String value) {
-		if (isEmpty(str) && value != null) {
-			str = value;
-		}
-		return str;
-	}
-
-	/**
-	 * 如果str为null,给str赋值""
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public static String checkNull(String str) {
-		if (str == null) {
-			str = "";
-		}
-		return str;
 	}
 
 	/**
@@ -395,6 +465,29 @@ public class StringUtils {
 	}
 
 	/**
+	 * 统计字符串字数
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static int getWordCount(String str) {
+		int length = 0;
+		if (isEmpty(str) == true) {
+			return length;
+		}
+		int i = 0;
+		for (int len = str.length(); i < len; i++) {
+			int ascii = Character.codePointAt(str, i);
+			if ((ascii >= 0) && (ascii <= 255))
+				length++;
+			else {
+				length += 2;
+			}
+		}
+		return length;
+	}
+
+	/**
 	 * 转换为特殊格式 \' 单引号(\u0027) \" 双引号(\u0022) \\ 反斜杠(\u005c)
 	 */
 	public static String javaConvert(String str) {
@@ -407,59 +500,18 @@ public class StringUtils {
 		return str;
 	}
 
-	/**
-	 * 数组转换以","分隔的字符串
-	 * 
-	 * @param param
-	 * @return
-	 */
-	public static String arrJoin(String[] param) {
-		StringBuffer result = new StringBuffer("");
-		if (param != null && param.length > 0) {
-			for (int i = 0; i < param.length; i++) {
-				if (i > 0) {
-					result.append(",");
-				}
-				result.append("'" + param[i] + "'");
-			}
-		}
-		return result.toString();
-	}
-
-	/**
-	 * 数组转换以指定分隔符连接的字符串
-	 * 
-	 * @param param
-	 * @return
-	 */
-	public static String arrJoin(String[] param, String splitStr) {
-		StringBuffer result = new StringBuffer("");
-		if (isEmpty(splitStr) == true) {
-			splitStr = CommonConst.SYS_SPLIT_COLON;
-		}
-		if (param != null && param.length > 0) {
-			int size = param.length;
-			for (int i = 0; i < size; i++) {
-				if (i > 0) {
-					result.append(splitStr);
-				}
-				result.append(param[i]);
-			}
-		}
-		return result.toString();
-	}
-
 	// /**
 	// *
 	// * 功能说明:过滤字符串,设定默认值
+	// *
 	// * @param str
 	// * 传入的字符串
 	// * @param defaultValue
 	// * 返回默认值
 	// * @return 过滤后的字符串(含有默认值参数的，返回默认值)
 	// */
-	// public static String filterNull_string(String str,String...defaultValue)
-	// {
+	// public static String filterNull_string(String str, String...
+	// defaultValue) {
 	//
 	// return null;
 	// }
@@ -473,7 +525,7 @@ public class StringUtils {
 	// * 返回默认值
 	// * @return 过滤后的字符串(含有默认值参数的，返回默认值)
 	// */
-	// public static int filterNull_int(String str,Integer...defaultValue) {
+	// public static int filterNull_int(String str, Integer... defaultValue) {
 	//
 	// return 0;
 	// }
@@ -487,14 +539,15 @@ public class StringUtils {
 	// * @return '1','2','3'
 	// */
 	// public static String parseSelectIn(String sql) {
-	// Pattern
-	// pattern=Pattern.compile("\\w*\\s+[i,I][n,N]\\s+\\((,?\\s*\\d+\\s*)+\\s*\\)\\s+\\w*");
+	// Pattern pattern = Pattern
+	// .compile("\\w*\\s+[i,I][n,N]\\s+\\((,?\\s*\\d+\\s*)+\\s*\\)\\s+\\w*");
 	// Matcher matcher = pattern.matcher(sql);
-	// if(matcher.find()){
+	// if (matcher.find()) {
 	//
 	// }
 	// return null;
 	// }
+
 	/**
 	 * 功能说明: 将字符串按照制定分隔符拆分成对应的数组
 	 * 
@@ -588,7 +641,7 @@ public class StringUtils {
 	}
 
 	/**
-	 * 判断是不是合法字符 c 要判断的字符
+	 * 判断是不是合法字符 char 要判断的字符
 	 */
 	public static boolean isLetter(String str) {
 		if (str == null || str.length() < 0) {
@@ -659,11 +712,11 @@ public class StringUtils {
 	 * 把数组中的id信息输出,组合成sql语句
 	 * 
 	 * @param arr
-	 * @param entityName
+	 * @param propertyName
 	 * @return ( id=1 or id=2 or id=3 )
 	 * @throws Exception
 	 */
-	public static String arrToSqlStr(String[] arr, String entityName)
+	public static String arrToSqlStr(String[] arr, String propertyName)
 			throws Exception {
 		StringBuffer result = new StringBuffer("");
 		try {
@@ -672,7 +725,7 @@ public class StringUtils {
 					if (i > 0) {
 						result.append(" or ");
 					}
-					result.append(entityName + "='" + (String) arr[i] + "'");
+					result.append(propertyName + "='" + (String) arr[i] + "'");
 				}
 			}
 		} catch (Exception ex) {
@@ -685,12 +738,13 @@ public class StringUtils {
 	 * 把数组中的id信息输出,组合成sql语句
 	 * 
 	 * @param arr
-	 * @param entityName
+	 * @param propertyName
+	 *            比如id
 	 * @return( id=1 or id=2 or id=3 )
 	 * @throws Exception
 	 */
-	public static String arrToSqlStr(String[] arr, String entityName, List param)
-			throws Exception {
+	public static String arrToSqlStr(String[] arr, String propertyName,
+			List param) throws Exception {
 		StringBuffer result = new StringBuffer("");
 		String temp = null;
 		try {
@@ -699,7 +753,8 @@ public class StringUtils {
 					if (i > 0) {
 						result.append(" or ");
 					}
-					result.append(entityName + "=?");
+					result.append(propertyName + "=?");
+
 					temp = (String) arr[i];
 					param.add(checkNull(temp));
 				}
@@ -720,72 +775,6 @@ public class StringUtils {
 	public static boolean isChinese(String str) {
 		Pattern pattern = Pattern.compile("[\u0391-\uFFE5]+$");
 		return pattern.matcher(str).matches();
-	}
-
-	/**
-	 * 功能描述：是否为空白,包括null和""
-	 * 
-	 * @param str
-	 * @return
-	 */
-	public static boolean isBlank(String str) {
-		return str == null || str.trim().length() == 0;
-	}
-
-	/**
-	 * 功能描述：判断是否为质数
-	 * 
-	 * @param x
-	 * @return
-	 */
-	public static boolean isPrime(int x) {
-		if (x <= 7) {
-			if (x == 2 || x == 3 || x == 5 || x == 7)
-				return true;
-		}
-		int c = 7;
-		if (x % 2 == 0)
-			return false;
-		if (x % 3 == 0)
-			return false;
-		if (x % 5 == 0)
-			return false;
-		int end = (int) Math.sqrt(x);
-		while (c <= end) {
-			if (x % c == 0) {
-				return false;
-			}
-			c += 4;
-			if (x % c == 0) {
-				return false;
-			}
-			c += 2;
-			if (x % c == 0) {
-				return false;
-			}
-			c += 4;
-			if (x % c == 0) {
-				return false;
-			}
-			c += 2;
-			if (x % c == 0) {
-				return false;
-			}
-			c += 4;
-			if (x % c == 0) {
-				return false;
-			}
-			c += 6;
-			if (x % c == 0) {
-				return false;
-			}
-			c += 2;
-			if (x % c == 0) {
-				return false;
-			}
-			c += 6;
-		}
-		return true;
 	}
 
 	/**
@@ -853,6 +842,12 @@ public class StringUtils {
 		if (prefix.length() > 0)
 			prefix += '圆'; // 如果整数部分存在,则有圆的字样
 		return prefix + suffix; // 返回正确表示
+	}
+
+	public static void main(String[] args) throws Exception {
+		StringUtils stringUtils = new StringUtils();
+		String result = stringUtils.getRepeatString(5, "abc");
+		System.out.println(result);
 	}
 
 }

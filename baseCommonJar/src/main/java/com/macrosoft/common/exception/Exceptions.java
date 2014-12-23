@@ -1,22 +1,19 @@
-/**
- * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.macrosoft.common.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- * 关于异常的工具类.
+ * 关于异常的工具类
  * 
- * @author xiao
+ * @author 呆呆
  */
 public class Exceptions {
-
 	/**
-	 * 将CheckedException转换为UncheckedException.
+	 * 将CheckedException转换为UncheckedException
+	 * 
+	 * @param e
+	 * @return
 	 */
 	public static RuntimeException unchecked(Exception e) {
 		if (e instanceof RuntimeException) {
@@ -28,6 +25,9 @@ public class Exceptions {
 
 	/**
 	 * 将ErrorStack转化为String.
+	 * 
+	 * @param e
+	 * @return
 	 */
 	public static String getStackTraceAsString(Exception e) {
 		StringWriter stringWriter = new StringWriter();
@@ -36,9 +36,14 @@ public class Exceptions {
 	}
 
 	/**
-	 * 判断异常是否由某些底层的异常引起.
+	 * 判断异常是否由某些底层的异常引起 未看懂(wangjun)
+	 * 
+	 * @param ex
+	 * @param causeExceptionClasses
+	 * @return
 	 */
-	public static boolean isCausedBy(Exception ex, Class<? extends Exception>... causeExceptionClasses) {
+	public static boolean isCausedBy(Exception ex,
+			Class<? extends Exception>... causeExceptionClasses) {
 		Throwable cause = ex.getCause();
 		while (cause != null) {
 			for (Class<? extends Exception> causeClass : causeExceptionClasses) {

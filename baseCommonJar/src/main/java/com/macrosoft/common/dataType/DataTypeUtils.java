@@ -1,8 +1,115 @@
-package com.macrosoft.common.string;
+package com.macrosoft.common.dataType;
 
+import java.util.List;
 import java.util.Vector;
 
 public class DataTypeUtils {
+	/**
+	 * 功能描述：判断是否为质数
+	 * 
+	 * @param x
+	 * @return
+	 */
+	public static boolean isPrime(int x) {
+		if (x <= 7) {
+			if (x == 2 || x == 3 || x == 5 || x == 7)
+				return true;
+		}
+		int c = 7;
+		if (x % 2 == 0)
+			return false;
+		if (x % 3 == 0)
+			return false;
+		if (x % 5 == 0)
+			return false;
+		int end = (int) Math.sqrt(x);
+		while (c <= end) {
+			if (x % c == 0) {
+				return false;
+			}
+			c += 4;
+			if (x % c == 0) {
+				return false;
+			}
+			c += 2;
+			if (x % c == 0) {
+				return false;
+			}
+			c += 4;
+			if (x % c == 0) {
+				return false;
+			}
+			c += 2;
+			if (x % c == 0) {
+				return false;
+			}
+			c += 4;
+			if (x % c == 0) {
+				return false;
+			}
+			c += 6;
+			if (x % c == 0) {
+				return false;
+			}
+			c += 2;
+			if (x % c == 0) {
+				return false;
+			}
+			c += 6;
+		}
+		return true;
+	}
+	
+	
+	public static boolean isEmpty(Integer value) {
+		return value == null;
+	}
+
+	public static boolean isEmpty(Long value) {
+		return value == null;
+	}
+
+	public static boolean isEmpty(Float value) {
+		return value == null;
+	}
+
+	public static boolean isEmpty(Double value) {
+		return value == null;
+	}
+
+	public static boolean isEmpty(Object[] value) {
+		return value == null;
+	}
+
+	public static boolean isEmpty(List value) {
+		return value == null;
+	}
+	
+	
+	public static boolean isNull(Integer str) {
+		return isEmpty(str);
+	}
+
+	public static boolean isNull(Long str) {
+		return isEmpty(str);
+	}
+
+	public static boolean isNull(Float str) {
+		return isEmpty(str);
+	}
+
+	public static boolean isNull(Double str) {
+		return isEmpty(str);
+	}
+
+	public static boolean isNull(Object[] str) {
+		return isEmpty(str);
+	}
+
+	public static boolean isNull(List str) {
+		return isEmpty(str);
+	}
+	
 	public static byte[] str2Bytes(String src, int byte_len) {
 		byte[] b1 = new byte[byte_len];
 		StringBuffer tempb = new StringBuffer();
