@@ -20,6 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.macrosoft.common.file.FileUtils;
+import com.macrosoft.common.log.LoggerUtils;
 
 /**
  * zip 解压与压缩工具
@@ -27,13 +28,10 @@ import com.macrosoft.common.file.FileUtils;
  * @author 呆呆
  */
 public class ZipUtils {
-	private Log logger = LogFactory.getLog(getClass());
-	
 	static final int BUFFER = 1024;// 1K
 	static final int BUFFERBIG = 524288;// 512K
 	static final String ZIPSUFFIX = ".zip"; // zip后缀
 
-	
 	/**
 	 * 递归压缩算法
 	 * 
@@ -77,6 +75,7 @@ public class ZipUtils {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		} finally {
 			if (bis != null) {
 				try {
@@ -85,6 +84,7 @@ public class ZipUtils {
 				} catch (IOException e) {
 					bis = null;
 					e.printStackTrace();
+					LoggerUtils.logger.error(e, e);
 				}
 			}
 			if (is != null)
@@ -94,6 +94,7 @@ public class ZipUtils {
 				} catch (IOException e) {
 					is = null;
 					e.printStackTrace();
+					LoggerUtils.logger.error(e, e);
 				}
 		}
 	}
@@ -144,10 +145,9 @@ public class ZipUtils {
 				ze.setCrc(crc.getValue());
 				is.close();
 			}
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		} finally {
 			if (zos != null) {
 				try {
@@ -156,6 +156,7 @@ public class ZipUtils {
 				} catch (IOException e) {
 					zos = null;
 					e.printStackTrace();
+					LoggerUtils.logger.error(e, e);
 				}
 			}
 		}
@@ -191,6 +192,7 @@ public class ZipUtils {
 			zos.closeEntry();
 		} catch (IOException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		} finally {
 			if (zos != null)
 				try {
@@ -199,6 +201,7 @@ public class ZipUtils {
 				} catch (IOException e) {
 					zos = null;
 					e.printStackTrace();
+					LoggerUtils.logger.error(e, e);
 				}
 		}
 	}
@@ -241,8 +244,8 @@ public class ZipUtils {
 		zipName = zipName + ".zip";
 		File srcFile = new File(sourceDir);
 		if (srcFile.exists()) {
-			String zipFile = FileUtils.filePathEndWithSeparator(srcFile.getParent())
-					+ zipName;
+			String zipFile = FileUtils.filePathEndWithSeparator(srcFile
+					.getParent()) + zipName;
 			zip(sourceDir, zipFile);
 		}
 	}
@@ -286,6 +289,7 @@ public class ZipUtils {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		} finally {
 			if (inputStream != null)
 				try {
@@ -294,6 +298,7 @@ public class ZipUtils {
 				} catch (IOException e) {
 					inputStream = null;
 					e.printStackTrace();
+					LoggerUtils.logger.error(e, e);
 				}
 		}
 	}
@@ -321,8 +326,9 @@ public class ZipUtils {
 			while ((entry = zis.getNextEntry()) != null) {
 				byte[] data = new byte[1024];
 
-				File outFile = new File(FileUtils.filePathEndWithSeparator(desPath)
-						+ entry.getName());
+				File outFile = new File(
+						FileUtils.filePathEndWithSeparator(desPath)
+								+ entry.getName());
 				if ((entry.isDirectory()) && (!outFile.exists())) {
 					outFile.mkdirs();
 				} else {
@@ -341,6 +347,7 @@ public class ZipUtils {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		} finally {
 			if (dest != null) {
 				try {
@@ -349,6 +356,7 @@ public class ZipUtils {
 				} catch (IOException e) {
 					dest = null;
 					e.printStackTrace();
+					LoggerUtils.logger.error(e, e);
 				}
 			}
 			if (zis != null)
@@ -358,6 +366,7 @@ public class ZipUtils {
 				} catch (IOException e) {
 					zis = null;
 					e.printStackTrace();
+					LoggerUtils.logger.error(e, e);
 				}
 		}
 	}
@@ -377,8 +386,8 @@ public class ZipUtils {
 		}
 		File srcFile = new File(zipfile);
 		if (srcFile.exists()) {
-			String filepath = FileUtils.filePathEndWithSeparator(srcFile.getParent())
-					+ filename;
+			String filepath = FileUtils.filePathEndWithSeparator(srcFile
+					.getParent()) + filename;
 			unZip(zipfile, filepath);
 		}
 	}

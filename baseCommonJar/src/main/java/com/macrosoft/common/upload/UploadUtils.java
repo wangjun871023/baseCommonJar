@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 
 import com.macrosoft.common.file.FileUtils;
+import com.macrosoft.common.log.LoggerUtils;
 
 
 /**
@@ -143,6 +144,7 @@ public class UploadUtils {
 			FileUtils.writeFile(new FileInputStream(formfile), path);
 		} catch (Exception e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return "";
 	}

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import com.macrosoft.common.base64.Base64;
 import com.macrosoft.common.constant.CommonConst;
+import com.macrosoft.common.log.LoggerUtils;
 
 public class StringUtils {
 	/**
@@ -239,6 +240,8 @@ public class StringUtils {
 			Matcher matcher = pattern.matcher(handset);
 			return matcher.matches();
 		} catch (RuntimeException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return false;
 	}
@@ -294,8 +297,9 @@ public class StringUtils {
 			}
 
 			result = strToArray(str, splitStr);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return result;
 	}
@@ -330,8 +334,9 @@ public class StringUtils {
 					result[i] = ((String) tempList.get(i));
 				}
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return result;
 	}
@@ -359,8 +364,9 @@ public class StringUtils {
 			}
 
 			result = strToList(str, splitStr);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return result;
 	}
@@ -385,8 +391,9 @@ public class StringUtils {
 			result = new ArrayList();
 			while (st.hasMoreElements() == true)
 				result.add(st.nextToken());
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return result;
 	}
@@ -702,8 +709,9 @@ public class StringUtils {
 					result.append(entityName + "='" + (String) arr[i] + "'");
 				}
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return result.toString();
 	}
@@ -728,8 +736,9 @@ public class StringUtils {
 					result.append(propertyName + "='" + (String) arr[i] + "'");
 				}
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return result.toString();
 	}
@@ -759,8 +768,9 @@ public class StringUtils {
 					param.add(checkNull(temp));
 				}
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 		return result.toString();
 	}
@@ -789,6 +799,8 @@ public class StringUtils {
 		try {
 			value = Double.parseDouble(str.trim());
 		} catch (Exception e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			return null;
 		}
 		char[] hunit = { '拾', '佰', '仟' }; // 段内位置表示

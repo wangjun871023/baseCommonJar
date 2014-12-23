@@ -19,14 +19,14 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
+import com.macrosoft.common.log.LoggerUtils;
+
 /**
  * Properties文件载入工具类. 可载入多个properties文件, 相同的属性在最后载入的文件中的值将会覆盖之前的值，但以System的Property优先.
  * 
  * @author xiao
  */
 public class PropertiesLoader {
-	protected Log logger = LogFactory.getLog(getClass());
-
 	private static ResourceLoader resourceLoader = new DefaultResourceLoader();
 
 	private final Properties properties;
@@ -138,9 +138,9 @@ public class PropertiesLoader {
 				Resource resource = resourceLoader.getResource(location);
 				is = resource.getInputStream();
 				props.load(is);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-				logger.error(ex, ex);
+			} catch (IOException e) {
+				e.printStackTrace();
+				LoggerUtils.logger.error(e, e);
 			} finally {
 				IOUtils.closeQuietly(is);
 			}

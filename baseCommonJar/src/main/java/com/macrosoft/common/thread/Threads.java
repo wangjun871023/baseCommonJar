@@ -3,6 +3,8 @@ package com.macrosoft.common.thread;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.macrosoft.common.log.LoggerUtils;
+
 /**
  * 线程相关工具类
  * 
@@ -20,6 +22,7 @@ public class Threads {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			// Ignore.
 		}
 	}
@@ -35,6 +38,7 @@ public class Threads {
 			Thread.sleep(unit.toMillis(duration));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			// Ignore.
 		}
 	}
@@ -58,10 +62,12 @@ public class Threads {
 					System.err.println("Pool did not terminated");
 				}
 			}
-		} catch (InterruptedException ie) {
+		} catch (InterruptedException e) {
 			// (Re-)Cancel if current thread also interrupted
 			pool.shutdownNow();
+			LoggerUtils.logger.error(e, e);
 			// Preserve interrupt status
+			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		}
 	}
@@ -78,8 +84,10 @@ public class Threads {
 			if (!pool.awaitTermination(timeout, timeUnit)) {
 				System.err.println("Pool did not terminated");
 			}
-		} catch (InterruptedException ie) {
+		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 		}
 	}
 
