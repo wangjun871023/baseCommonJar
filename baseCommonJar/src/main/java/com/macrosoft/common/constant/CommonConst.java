@@ -51,6 +51,9 @@ public final class CommonConst {
 	public static final String RESPONSE_EXTRA_KEY = "extra";
 	public static final String PAGE_ROOT_KEY = "data";
 	public static final String PAGIE_TOTAL_KEY = "totalCount";
+	/**
+	 * BaseForm的Model
+	 */
 	public static final String ENTITY_ROOT_KEY = "model";
 	public static final String FORM_ACTION_KEY = "result";
 	public static final String FORM_ID_KEY = "id";
