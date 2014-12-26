@@ -1,5 +1,7 @@
 package com.macrosoft.common.constant;
 
+import org.apache.http.HttpRequest;
+
 /**
  * 系统默认常量
  * 
@@ -157,4 +159,11 @@ public final class CommonConst {
 	 * cookie路径
 	 */
 	public final static String SYS_COOKIE_PATH="/";//ids_path/
+	
+	
+	public final static String UPLOAD_FILE_PATH="/uploadFile";//ids_path/
+	
+	
+	
+	
 }
