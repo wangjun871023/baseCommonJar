@@ -14,7 +14,7 @@ import com.macrosoft.common.log.LoggerUtils;
 
 
 /**
- * 文件上传
+ * 文件上传工具
  * 
  * @author 呆呆
  *

@@ -19,7 +19,6 @@ import javax.imageio.ImageIO;
 import com.macrosoft.common.log.LoggerUtils;
 
 public class VerifyCodeUtils {
-
 	// 使用到Algerian字体，系统里没有的话需要安装字体，字体只显示大写，去掉了1,0,i,o几个容易混淆的字符
 	public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 	private static Random random = new Random();
@@ -246,11 +245,25 @@ public class VerifyCodeUtils {
 		return rgb;
 	}
 
+	/**
+	 * 修剪 扭曲
+	 * @param g
+	 * @param w1
+	 * @param h1
+	 * @param color
+	 */
 	private static void shear(Graphics g, int w1, int h1, Color color) {
 		shearX(g, w1, h1, color);
 		shearY(g, w1, h1, color);
 	}
 
+	/**
+	 * x方向扭曲
+	 * @param g
+	 * @param w1
+	 * @param h1
+	 * @param color
+	 */
 	private static void shearX(Graphics g, int w1, int h1, Color color) {
 		int period = random.nextInt(2);
 		boolean borderGap = true;
@@ -272,10 +285,15 @@ public class VerifyCodeUtils {
 
 	}
 
+	/**
+	 * y方向扭曲
+	 * @param g
+	 * @param w1
+	 * @param h1
+	 * @param color
+	 */
 	private static void shearY(Graphics g, int w1, int h1, Color color) {
-
 		int period = random.nextInt(40) + 10; // 50;
-
 		boolean borderGap = true;
 		int frames = 20;
 		int phase = 7;

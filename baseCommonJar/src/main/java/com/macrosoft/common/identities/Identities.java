@@ -5,6 +5,11 @@ import java.util.UUID;
 
 import com.macrosoft.common.encode.Encodes;
 
+/**
+ * 主键生成策略
+ * @author 呆呆
+ *
+ */
 public final class Identities {
 
 	private static SecureRandom random = new SecureRandom();

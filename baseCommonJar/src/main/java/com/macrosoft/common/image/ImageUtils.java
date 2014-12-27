@@ -216,6 +216,11 @@ public class ImageUtils {
 		return rgb;
 	}
 
+	/**
+	 * 是否有alpha
+	 * @param image
+	 * @return
+	 */
 	public static boolean hasAlpha(Image image) {
 		try {
 			PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
@@ -365,6 +370,12 @@ public class ImageUtils {
 		return false;
 	}
 
+	/**
+	 * 旋转图片
+	 * @param bufferedimage
+	 * @param degree
+	 * @return
+	 */
 	public static BufferedImage rotateImage(BufferedImage bufferedimage,
 			int degree) {
 		int w = bufferedimage.getWidth();
@@ -382,6 +393,14 @@ public class ImageUtils {
 		return img;
 	}
 
+	/**
+	 * 打印图片
+	 * @param pressImg
+	 * @param targetImg
+	 * @param x
+	 * @param y
+	 * @param alpha
+	 */
 	public static final void pressImage(String pressImg, String targetImg,
 			int x, int y, float alpha) {
 		try {
@@ -408,6 +427,18 @@ public class ImageUtils {
 		}
 	}
 
+	/**
+	 * 图片上打印文字
+	 * @param pressText
+	 * @param targetImg
+	 * @param fontName
+	 * @param fontStyle
+	 * @param color
+	 * @param fontSize
+	 * @param x
+	 * @param y
+	 * @param alpha
+	 */
 	public static void pressText(String pressText, String targetImg,
 			String fontName, int fontStyle, Color color, int fontSize, int x,
 			int y, float alpha) {

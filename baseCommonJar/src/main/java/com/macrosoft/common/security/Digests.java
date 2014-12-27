@@ -1,8 +1,3 @@
-/**
- * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.macrosoft.common.security;
 
 import java.io.IOException;
@@ -14,13 +9,14 @@ import java.security.SecureRandom;
 import org.apache.commons.lang3.Validate;
 
 import com.macrosoft.common.exception.Exceptions;
+import com.macrosoft.common.log.LoggerUtils;
 
 /**
  * 支持SHA-1/MD5消息摘要的工具类.
  * 
  * 返回ByteSource，可进一步被编码为Hex, Base64或UrlSafeBase64
  * 
- * @author xiao
+ * @author 呆呆 
  */
 public class Digests {
 
@@ -36,10 +32,23 @@ public class Digests {
 		return digest(input, SHA1, null, 1);
 	}
 
+	/**
+	 * 对输入字符串进行sha1散列
+	 * @param input
+	 * @param salt
+	 * @return
+	 */
 	public static byte[] sha1(byte[] input, byte[] salt) {
 		return digest(input, SHA1, salt, 1);
 	}
 
+	/**
+	 * 对输入字符串进行sha1散列
+	 * @param input
+	 * @param salt
+	 * @param iterations
+	 * @return
+	 */
 	public static byte[] sha1(byte[] input, byte[] salt, int iterations) {
 		return digest(input, SHA1, salt, iterations);
 	}
@@ -63,6 +72,7 @@ public class Digests {
 			}
 			return result;
 		} catch (GeneralSecurityException e) {
+			LoggerUtils.logger.error(e,e);
 			throw Exceptions.unchecked(e);
 		}
 	}
@@ -94,6 +104,13 @@ public class Digests {
 		return digest(input, SHA1);
 	}
 
+	/**
+	 * 得到摘要
+	 * @param input
+	 * @param algorithm
+	 * @return
+	 * @throws IOException
+	 */
 	private static byte[] digest(InputStream input, String algorithm) throws IOException {
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
@@ -108,8 +125,8 @@ public class Digests {
 
 			return messageDigest.digest();
 		} catch (GeneralSecurityException e) {
+			LoggerUtils.logger.error(e,e);
 			throw Exceptions.unchecked(e);
 		}
 	}
-
 }

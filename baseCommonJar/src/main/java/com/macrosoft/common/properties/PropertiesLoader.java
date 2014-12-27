@@ -1,10 +1,3 @@
-/**
-	 * Copyright (c) 2005-2011 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * 
- * $Id: PropertiesLoader.java 1690 2012-02-22 13:42:00Z xiaoxiu $
- */
 package com.macrosoft.common.properties;
 
 import java.io.IOException;
@@ -24,7 +17,7 @@ import com.macrosoft.common.log.LoggerUtils;
 /**
  * Properties文件载入工具类. 可载入多个properties文件, 相同的属性在最后载入的文件中的值将会覆盖之前的值，但以System的Property优先.
  * 
- * @author xiao
+ * @author 呆呆 
  */
 public class PropertiesLoader {
 	private static ResourceLoader resourceLoader = new DefaultResourceLoader();

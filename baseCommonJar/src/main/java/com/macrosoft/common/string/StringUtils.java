@@ -436,7 +436,7 @@ public class StringUtils {
 	}
 
 	/**
-	 * 移除字符
+	 * 移除过滤空字符
 	 * 
 	 * @param str
 	 * @return
@@ -506,54 +506,6 @@ public class StringUtils {
 		str = str.replaceAll("\"", "\\u0022");
 		return str;
 	}
-
-	// /**
-	// *
-	// * 功能说明:过滤字符串,设定默认值
-	// *
-	// * @param str
-	// * 传入的字符串
-	// * @param defaultValue
-	// * 返回默认值
-	// * @return 过滤后的字符串(含有默认值参数的，返回默认值)
-	// */
-	// public static String filterNull_string(String str, String...
-	// defaultValue) {
-	//
-	// return null;
-	// }
-	//
-	// /**
-	// * 功能说明:过滤字符串，把字符串转换成整数
-	// *
-	// * @param str
-	// * 传入的字符串
-	// * @param defaultValue
-	// * 返回默认值
-	// * @return 过滤后的字符串(含有默认值参数的，返回默认值)
-	// */
-	// public static int filterNull_int(String str, Integer... defaultValue) {
-	//
-	// return 0;
-	// }
-	//
-	// /**
-	// * 功能说明:sql语句中in语句的转化器，例如：传入参数为1,2,3 转换结果为'1','2','3' 处理过程：将 id in (1,2,3)
-	// * 转化为 1','2','3 再通过最外层的单引号,结果为'1','2','3'
-	// *
-	// * @param sql
-	// * 1,2,3
-	// * @return '1','2','3'
-	// */
-	// public static String parseSelectIn(String sql) {
-	// Pattern pattern = Pattern
-	// .compile("\\w*\\s+[i,I][n,N]\\s+\\((,?\\s*\\d+\\s*)+\\s*\\)\\s+\\w*");
-	// Matcher matcher = pattern.matcher(sql);
-	// if (matcher.find()) {
-	//
-	// }
-	// return null;
-	// }
 
 	/**
 	 * 功能说明: 将字符串按照制定分隔符拆分成对应的数组

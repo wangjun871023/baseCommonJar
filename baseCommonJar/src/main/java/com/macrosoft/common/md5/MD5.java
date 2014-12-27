@@ -30,6 +30,12 @@ public final class MD5 {
 	}
 
 
+	/**
+	 * 31位
+	 * 得到MD5值
+	 * @param src_txt
+	 * @return
+	 */
 	public static String getMD5(String src_txt) {
 		String result = null;
 		byte[] bArr = null;
@@ -49,15 +55,11 @@ public final class MD5 {
 		return result;
 	}
 
-	private static String bytesToHexStr2(byte[] b) {
-		String result = new String("");
-		int i = 0;
-		for (int len = b.length; i < len; i++) {
-			result = result + Integer.toHexString(b[i] & 0xFF);
-		}
-		return result;
-	}
-
+	/**
+	 * 字节到16进制字符串
+	 * @param b
+	 * @return
+	 */
 	private static String bytesToHexStr(byte[] b) {
 		StringBuffer result = new StringBuffer("");
 		int i = 0;
@@ -67,12 +69,16 @@ public final class MD5 {
 		return result.toString();
 	}
 
+	/**
+	 * 32位MD5
+	 * @param src_txt
+	 * @return
+	 */
 	public static String getMD5MD5(String src_txt) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			md.update(src_txt.getBytes());
 			byte[] b = md.digest();
-
 			StringBuffer buf = new StringBuffer("");
 			int offset = 0;
 			for (int len = b.length; offset < len; offset++) {
@@ -90,5 +96,11 @@ public final class MD5 {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		String text = "admin";
+		System.out.println(getMD5(text));
+		System.out.println(getMD5MD5(text));
 	}
 }

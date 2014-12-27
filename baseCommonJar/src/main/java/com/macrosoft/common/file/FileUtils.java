@@ -45,6 +45,11 @@ public class FileUtils {
 		return instanceFile(strPath).exists();
 	}
 
+	/**
+	 * 实例化文件
+	 * @param strPath
+	 * @return
+	 */
 	private static File instanceFile(String strPath) {
 		if ((strPath == null) || ("".equals(strPath.trim()))) {
 			throw new IllegalArgumentException("实例化文件对象参数异常,strPath=" + strPath);
@@ -52,6 +57,12 @@ public class FileUtils {
 		return new File(strPath);
 	}
 
+	/**
+	 * 将文件以文本返回
+	 * @param strFilePath
+	 * @param strCoding
+	 * @return
+	 */
 	public static String fileToString(String strFilePath, String strCoding) {
 		InputStream is = null;
 		ByteArrayOutputStream out = null;
