@@ -3,6 +3,11 @@ package com.macrosoft.common.base64;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * Base64OutputStream输出流工具类
+ * @author 呆呆
+ *
+ */
 public class Base64OutputStream extends OutputStream {
 	private OutputStream outputStream = null;
 

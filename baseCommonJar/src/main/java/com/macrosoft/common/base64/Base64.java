@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
+import com.macrosoft.common.log.LoggerUtils;
+
 /**
  * Base64 加密/解密算法
  * 
@@ -33,6 +35,8 @@ public class Base64 {
 			result = new String(encoded, "ASCII");
 		} catch (UnsupportedEncodingException e) {
 			result = null;
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 		return result;
@@ -52,6 +56,8 @@ public class Base64 {
 			}
 			result = str.getBytes("ASCII");
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 		return decode(result);
@@ -71,6 +77,7 @@ public class Base64 {
 			return new String(encoded, "ASCII");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 	}
@@ -87,6 +94,8 @@ public class Base64 {
 		try {
 			bytes = str.getBytes("ASCII");
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 		byte[] decoded = decode(bytes);
@@ -110,6 +119,7 @@ public class Base64 {
 			return new String(encoded, encoding);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException(encoding + " is not supported!", e);
 		}
 	}
@@ -128,6 +138,8 @@ public class Base64 {
 		try {
 			bytes = str.getBytes(encoding);
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException(encoding + " is not supported!", e);
 		}
 		byte[] decoded = decode(bytes);
@@ -149,6 +161,8 @@ public class Base64 {
 		try {
 			bytes = str.getBytes(charset);
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("Unsupported charset: " + charset, e);
 		}
 		byte[] encoded = encode(bytes);
@@ -156,6 +170,7 @@ public class Base64 {
 			return new String(encoded, "ASCII");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 	}
@@ -174,12 +189,16 @@ public class Base64 {
 		try {
 			bytes = str.getBytes("ASCII");
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 		byte[] decoded = decode(bytes);
 		try {
 			return new String(decoded, charset);
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("Unsupported charset: " + charset, e);
 		}
 	}
@@ -201,12 +220,16 @@ public class Base64 {
 		try {
 			bytes = str.getBytes(charset);
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("Unsupported charset: " + charset, e);
 		}
 		byte[] encoded = encode(bytes);
 		try {
 			return new String(encoded, encoding);
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException(encoding + " is not supported!", e);
 		}
 	}
@@ -228,20 +251,37 @@ public class Base64 {
 		try {
 			bytes = str.getBytes(encoding);
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException(encoding + " is not supported!", e);
 		}
 		byte[] decoded = decode(bytes);
 		try {
 			return new String(decoded, charset);
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("Unsupported charset: " + charset, e);
 		}
 	}
 
+	/**
+	 * 对字节数组加密
+	 * @param bytes
+	 * @return
+	 * @throws RuntimeException
+	 */
 	public static byte[] encode(byte[] bytes) throws RuntimeException {
 		return encode(bytes, 0);
 	}
 
+	/**
+	 * 对字节加密
+	 * @param bytes
+	 * @param wrapAt
+	 * @return
+	 * @throws RuntimeException
+	 */
 	public static byte[] encode(byte[] bytes, int wrapAt)
 			throws RuntimeException {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
@@ -249,37 +289,55 @@ public class Base64 {
 		try {
 			encode(inputStream, outputStream, wrapAt);
 		} catch (IOException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("Unexpected I/O error", e);
 		} finally {
 			try {
 				inputStream.close();
 			} catch (Throwable t) {
+				t.printStackTrace();
+				LoggerUtils.logger.error(t, t);
 			}
 			inputStream = null;
 			try {
 				outputStream.close();
 			} catch (Throwable t) {
+				t.printStackTrace();
+				LoggerUtils.logger.error(t, t);
 			}
 		}
 		return outputStream.toByteArray();
 	}
 
+	/**
+	 * 对字节解密
+	 * @param bytes
+	 * @return
+	 * @throws RuntimeException
+	 */
 	public static byte[] decode(byte[] bytes) throws RuntimeException {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
 			decode(inputStream, outputStream);
 		} catch (IOException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
 			throw new RuntimeException("Unexpected I/O error", e);
 		} finally {
 			try {
 				inputStream.close();
 			} catch (Throwable t) {
+				t.printStackTrace();
+				LoggerUtils.logger.error(t, t);
 			}
 			inputStream = null;
 			try {
 				outputStream.close();
 			} catch (Throwable t) {
+				t.printStackTrace();
+				LoggerUtils.logger.error(t, t);
 			}
 		}
 		return outputStream.toByteArray();
@@ -297,6 +355,13 @@ public class Base64 {
 		encode(inputStream, outputStream, 0);
 	}
 
+	/**
+	 * 对数据流加密
+	 * @param inputStream
+	 * @param outputStream
+	 * @param wrapAt
+	 * @throws IOException
+	 */
 	public static void encode(InputStream inputStream,
 			OutputStream outputStream, int wrapAt) throws IOException {
 		Base64OutputStream aux = new Base64OutputStream(outputStream, wrapAt);
@@ -304,11 +369,24 @@ public class Base64 {
 		aux.commit();
 	}
 
+	/**
+	 * 对数据流解密
+	 * @param inputStream
+	 * @param outputStream
+	 * @throws IOException
+	 */
 	public static void decode(InputStream inputStream, OutputStream outputStream)
 			throws IOException {
 		copy(new Base64InputStream(inputStream), outputStream);
 	}
 
+	/**
+	 * 对文件加密
+	 * @param source
+	 * @param target
+	 * @param wrapAt
+	 * @throws IOException
+	 */
 	public static void encode(File source, File target, int wrapAt)
 			throws IOException {
 		InputStream inputStream = null;
@@ -322,15 +400,25 @@ public class Base64 {
 				try {
 					outputStream.close();
 				} catch (Throwable t) {
+					t.printStackTrace();
+					LoggerUtils.logger.error(t, t);
 				}
 			if (inputStream != null)
 				try {
 					inputStream.close();
 				} catch (Throwable t) {
+					t.printStackTrace();
+					LoggerUtils.logger.error(t, t);
 				}
 		}
 	}
 
+	/**
+	 * 对文件加密
+	 * @param source
+	 * @param target
+	 * @throws IOException
+	 */
 	public static void encode(File source, File target) throws IOException {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
@@ -343,15 +431,25 @@ public class Base64 {
 				try {
 					outputStream.close();
 				} catch (Throwable t) {
+					t.printStackTrace();
+					LoggerUtils.logger.error(t, t);
 				}
 			if (inputStream != null)
 				try {
 					inputStream.close();
 				} catch (Throwable t) {
+					t.printStackTrace();
+					LoggerUtils.logger.error(t, t);
 				}
 		}
 	}
 
+	/**
+	 * 对文件解密
+	 * @param source
+	 * @param target
+	 * @throws IOException
+	 */
 	public static void decode(File source, File target) throws IOException {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
@@ -364,15 +462,25 @@ public class Base64 {
 				try {
 					outputStream.close();
 				} catch (Throwable t) {
+					t.printStackTrace();
+					LoggerUtils.logger.error(t, t);
 				}
 			if (inputStream != null)
 				try {
 					inputStream.close();
 				} catch (Throwable t) {
+					t.printStackTrace();
+					LoggerUtils.logger.error(t, t);
 				}
 		}
 	}
 
+	/**
+	 * 复制文件流
+	 * @param inputStream
+	 * @param outputStream
+	 * @throws IOException
+	 */
 	private static void copy(InputStream inputStream, OutputStream outputStream)
 			throws IOException {
 		byte[] b = new byte[1024];

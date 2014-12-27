@@ -4,10 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
@@ -28,43 +25,7 @@ public class BaseFunction {
 
 	private BaseFunction() {
 	}
-
-	/**
-	 * 清空hash表中数据
-	 * 
-	 * @param hash
-	 */
-	public static void clearHash(Hashtable hash) {
-		if (hash != null) {
-			hash.clear();
-		}
-		hash = null;
-	}
-
-	/**
-	 * 清空map中对象
-	 * 
-	 * @param hash
-	 */
-	public static void clearMap(HashMap hash) {
-		if (hash != null) {
-			hash.clear();
-		}
-		hash = null;
-	}
-
-	/**
-	 * 清空list中对象
-	 * 
-	 * @param list
-	 */
-	public static void clearList(List list) {
-		if (list != null) {
-			list.clear();
-		}
-		list = null;
-	}
-
+	
 	/**
 	 * 判断字符串是否为空,空是指: null 或 空串 或 全是空格的字符串
 	 * 
@@ -160,15 +121,7 @@ public class BaseFunction {
 		return result;
 	}
 
-	public static String javaConvert(String str) {
-		/*
-		 * \' 单引号(\u0027) \" 双引号(\u0022) \\ 反斜杠(\u005c)
-		 */
-		if (isEmpty(str) == false) {
-			str = str.replaceAll("\\\\", "\\\\\\\\");
-		}
-		return str;
-	}
+ 
 
 	/**
 	 * 得到两个时间之间相差的秒数
@@ -873,45 +826,4 @@ public class BaseFunction {
 		}
 		return result;
 	}
-
-	/**
-	 * 判断Map是否为空
-	 * 
-	 * @param hash
-	 * @return
-	 */
-	public static boolean emptyMap(Map hash) {
-		boolean result = true;
-		if ((hash != null) && (hash.size() > 0)) {
-			result = false;
-		}
-		return result;
-	}
-
-	/**
-	 * 判断HashTable是否为空
-	 * 
-	 * @param hash
-	 * @return
-	 */
-	public static boolean emptyHash(Hashtable hash) {
-		boolean result = true;
-		if ((hash != null) && (hash.size() > 0)) {
-			result = false;
-		}
-		return result;
-	}
-
-	/**
-	 * 清空Map
-	 * 
-	 * @param hash
-	 */
-	public static void clearMap(Map hash) {
-		if (hash != null) {
-			hash.clear();
-		}
-		hash = null;
-	}
-
 }

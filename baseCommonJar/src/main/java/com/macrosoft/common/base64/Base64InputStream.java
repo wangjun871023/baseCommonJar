@@ -3,6 +3,11 @@ package com.macrosoft.common.base64;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Base64InputStream输入流工具类
+ * @author 呆呆
+ *
+ */
 public class Base64InputStream extends InputStream {
 	private InputStream inputStream;
 	private int[] buffer;
