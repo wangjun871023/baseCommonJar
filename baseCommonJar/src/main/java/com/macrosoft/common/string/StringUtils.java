@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.macrosoft.common.base64.Base64;
+import com.macrosoft.common.base64.Base64Utils;
 import com.macrosoft.common.constant.CommonConst;
 import com.macrosoft.common.log.LoggerUtils;
 
@@ -177,7 +177,7 @@ public class StringUtils {
 	 * @return
 	 */
 	public static String encrypt(byte[] bytes) {
-		return Base64.encrypt(bytes);
+		return Base64Utils.encrypt(bytes);
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class StringUtils {
 	 * @return
 	 */
 	public static byte[] unEncrypt(String str) {
-		return Base64.unEncrypt(str);
+		return Base64Utils.unEncrypt(str);
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class StringUtils {
 	 * @return
 	 */
 	public static String encode(String str, String encoding) {
-		return Base64.encodeByEncoding(str, encoding);
+		return Base64Utils.encodeByEncoding(str, encoding);
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class StringUtils {
 	 * @return
 	 */
 	public static String decode(String str, String encoding) {
-		return Base64.decodeByEncoding(str, encoding);
+		return Base64Utils.decodeByEncoding(str, encoding);
 	}
 
 	/**
