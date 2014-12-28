@@ -8,7 +8,6 @@ import com.macrosoft.common.string.StringUtils;
  * 
  * @author 呆呆
  */
-@SuppressWarnings("rawtypes")
 public class PathCodeUtils{
 
 	private PathCodeUtils() {
