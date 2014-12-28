@@ -18,67 +18,6 @@ import com.macrosoft.common.log.LoggerUtils;
  * @author 呆呆
  */
 public class Base64Utils {
-
-	private static char[] map1 = new char[64];
-	private static byte[] map2;
-
-	/**
-	 * 加密字符串
-	 * 
-	 * @param s
-	 * @return
-	 */
-	public static String encodeString(String s) {
-		return new String(encode(s.getBytes()));
-	}
-
-	public static String decodeString(String s) {
-		return new String(decode(s));
-	}
-
-	public static byte[] decode(char[] in) {
-		int iLen = in.length;
-		if (iLen % 4 != 0) {
-			throw new IllegalArgumentException(
-					"Length of Base64 encoded input string is not a multiple of 4.");
-		}
-		while ((iLen > 0) && (in[(iLen - 1)] == '='))
-			iLen--;
-		int oLen = iLen * 3 / 4;
-		byte[] out = new byte[oLen];
-		int ip = 0;
-		int op = 0;
-		while (ip < iLen) {
-			int i0 = in[(ip++)];
-			int i1 = in[(ip++)];
-			int i2 = ip < iLen ? in[(ip++)] : 65;
-			int i3 = ip < iLen ? in[(ip++)] : 65;
-			if ((i0 > 127) || (i1 > 127) || (i2 > 127) || (i3 > 127)) {
-				throw new IllegalArgumentException(
-						"Illegal character in Base64 encoded data.");
-			}
-			int b0 = map2[i0];
-			int b1 = map2[i1];
-			int b2 = map2[i2];
-			int b3 = map2[i3];
-			if ((b0 < 0) || (b1 < 0) || (b2 < 0) || (b3 < 0)) {
-				throw new IllegalArgumentException(
-						"Illegal character in Base64 encoded data.");
-			}
-			int o0 = b0 << 2 | b1 >>> 4;
-			int o1 = (b1 & 0xF) << 4 | b2 >>> 2;
-			int o2 = (b2 & 0x3) << 6 | b3;
-			out[(op++)] = (byte) o0;
-			if (op < oLen)
-				out[(op++)] = (byte) o1;
-			if (op < oLen)
-				out[(op++)] = (byte) o2;
-		}
-		return out;
-	}
-
-	
-
 	/**
 	 * 为byte[]数组加密 默认以ASCII编码方式加密
 	 * 
@@ -124,6 +63,8 @@ public class Base64Utils {
 		}
 		return decode(result);
 	}
+	
+	
 
 	/**
 	 * 对字符串加密,默认以ASCII对加密后的字符串编码
@@ -163,7 +104,7 @@ public class Base64Utils {
 		byte[] decoded = decode(bytes);
 		return new String(decoded);
 	}
-
+	
 	/**
 	 * 对字符串加密，指定加密之后的字符串编码
 	 * 
@@ -337,43 +278,7 @@ public class Base64Utils {
 	public static byte[] encode(byte[] bytes) throws RuntimeException {
 		return encode(bytes, 0);
 	}
-
-	/**
-	 * 对字节加密
-	 * 
-	 * @param bytes
-	 * @param wrapAt
-	 * @return
-	 * @throws RuntimeException
-	 */
-	public static byte[] encode(byte[] bytes, int wrapAt)
-			throws RuntimeException {
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		try {
-			encode(inputStream, outputStream, wrapAt);
-		} catch (IOException e) {
-			e.printStackTrace();
-			LoggerUtils.logger.error(e, e);
-			throw new RuntimeException("Unexpected I/O error", e);
-		} finally {
-			try {
-				inputStream.close();
-			} catch (Throwable t) {
-				t.printStackTrace();
-				LoggerUtils.logger.error(t, t);
-			}
-			inputStream = null;
-			try {
-				outputStream.close();
-			} catch (Throwable t) {
-				t.printStackTrace();
-				LoggerUtils.logger.error(t, t);
-			}
-		}
-		return outputStream.toByteArray();
-	}
-
+	
 	/**
 	 * 对字节解密
 	 * 
@@ -407,6 +312,44 @@ public class Base64Utils {
 		}
 		return outputStream.toByteArray();
 	}
+
+	/**
+	 * 对字节加密
+	 * 到达指定字符数后换行
+	 * @param bytes
+	 * @param wrapAt
+	 * @return
+	 * @throws RuntimeException
+	 */
+	public static byte[] encode(byte[] bytes, int wrapAt)
+			throws RuntimeException {
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			encode(inputStream, outputStream, wrapAt);
+		} catch (IOException e) {
+			e.printStackTrace();
+			LoggerUtils.logger.error(e, e);
+			throw new RuntimeException("Unexpected I/O error", e);
+		} finally {
+			try {
+				inputStream.close();
+			} catch (Throwable t) {
+				t.printStackTrace();
+				LoggerUtils.logger.error(t, t);
+			}
+			inputStream = null;
+			try {
+				outputStream.close();
+			} catch (Throwable t) {
+				t.printStackTrace();
+				LoggerUtils.logger.error(t, t);
+			}
+		}
+		return outputStream.toByteArray();
+	}
+
+	
 
 	/**
 	 * 对输入流进行base64加密
@@ -449,7 +392,7 @@ public class Base64Utils {
 
 	/**
 	 * 对文件加密
-	 * 
+	 * 到达指定字符数后换行
 	 * @param source
 	 * @param target
 	 * @param wrapAt
@@ -559,24 +502,5 @@ public class Base64Utils {
 		while ((len = inputStream.read(b)) != -1)
 			outputStream.write(b, 0, len);
 	}
-	
-	
-	static {
-		int i = 0;
-		for (char c = 'A'; c <= 'Z'; c = (char) (c + '\001'))
-			map1[(i++)] = c;
-		for (char c = 'a'; c <= 'z'; c = (char) (c + '\001'))
-			map1[(i++)] = c;
-		for (char c = '0'; c <= '9'; c = (char) (c + '\001'))
-			map1[(i++)] = c;
-		map1[(i++)] = '+';
-		map1[(i++)] = '/';
 
-		map2 = new byte[''];
-
-		for (i = 0; i < map2.length; i++)
-			map2[i] = -1;
-		for (i = 0; i < 64; i++)
-			map2[map1[i]] = (byte) i;
-	}
 }
