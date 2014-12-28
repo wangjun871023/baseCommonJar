@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -61,6 +64,138 @@ public final class HttpUtils {
 		return result;
 	}
 
+
+	/**
+	 * 得到请求url:
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getRequestUrl(HttpServletRequest request) {
+		StringBuffer result = new StringBuffer("");
+		result.append("http://" + request.getServerName());
+		result.append(":" + request.getServerPort());
+		result.append("/" + request.getContextPath() + "/"
+				+ request.getServletPath());
+		return result.toString();
+	}
+
+	/**
+	 * 得到请求数据:
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getRequestData(HttpServletRequest request) {
+		StringBuffer result = new StringBuffer("");
+		result.append(getRequestUrl(request));
+		Enumeration enumType = request.getParameterNames();
+		int count = 0;
+		while (enumType.hasMoreElements()) {
+			String fieldName = (String) enumType.nextElement();
+			String fieldValue = request.getParameter(fieldName);
+			fieldValue = fieldValue == null ? "" : request
+					.getParameter(fieldName);
+			if (count > 0) {
+				result.append("&" + fieldName + "=" + fieldValue);
+			} else {
+				result.append("?" + fieldName + "=" + fieldValue);
+				count = 1;
+			}
+
+		}
+		return result.toString();
+
+	}
+
+	/**
+	 * 如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值，究竟哪个才是真正的用户端的真实IP呢？
+	 * 
+	 * 答案是取X-Forwarded-For中第一个非unknown的有效IP字符串
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getIp(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static StringBuffer getRequestHead(HttpServletRequest request) {
+		StringBuffer result = new StringBuffer("");
+		String headerName = null;
+		if (request != null) {
+			Enumeration enumType = request.getHeaderNames();
+			if (enumType != null) {
+				while (enumType.hasMoreElements() == true) {
+					headerName = (String) enumType.nextElement();
+					result.append(headerName + ":"
+							+ request.getHeader(headerName) + ";");
+				}
+			}
+		}
+		return result;
+	}
+
+
+
+	
+	
+
+
+	/**
+	 * 移动运营商 多普达 s900 cellid:61790-8545-460-0 中国电信 运营商 天语手机
+	 * 0-539426348-0-2070684148 看是否为有效的移动基站
+	 * 
+	 * @param arr
+	 * @return
+	 */
+	public static boolean validYidongCellId(String[] arr) {
+		boolean result = true;
+		if (arr != null && arr.length == 4) {
+			if ("0".equals(arr[0]) == true) {
+				result = false;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 中国电信 运营商 华为c8500手机 3156-13824-3-460-00 如果是飞行模式 -1--1--1 三星i559基站信息
+	 * :0-13824-3 看是否为有效的基站
+	 * 
+	 * @param arr
+	 * @return
+	 */
+	public static boolean validDianxingCellId(String[] arr, String cell_id) {
+		boolean result = true;
+		if (arr != null) {
+			if ("0".equals(arr[0]) == true
+					|| "-1--1--1".equals(cell_id) == true
+					|| "[-1,-1]".equals(cell_id) == true || arr.length == 6
+					|| arr.length == 3) {
+				result = false;
+			}
+		}
+		return result;
+	}
+	
+	
+	
 	/**
 	 * 发送get请求
 	 * @param url

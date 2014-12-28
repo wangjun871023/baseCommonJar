@@ -7,10 +7,156 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.macrosoft.common.base64.Base64Utils;
+import com.macrosoft.common.collection.CollectionUtils;
 import com.macrosoft.common.constant.CommonConst;
 import com.macrosoft.common.log.LoggerUtils;
 
 public class StringUtils {
+	
+	/**
+	 * 
+	 //统计由分隔符分割组成的字符串有几个有效的id
+	 * 
+	 * @param ids
+	 */
+	public static int getCountInt(String ids) {
+		String[] temp_arr = null;
+		int result = 0;
+		if (isEmpty(ids) == false) {
+			temp_arr = strToArray(ids);
+			if (temp_arr != null) {
+				for (int i = 0; i < temp_arr.length; i++) {
+					if (temp_arr[i] != CommonConst.SYS_SPLIT_COLON
+							&& isEmpty(temp_arr[i]) == false) {
+						result++;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+
+	/**
+	 * 把数组中的id信息输出,组合成sql语句
+	 * 
+	 * @param list
+	 * @param entityName
+	 * @return( id=1 or id=2 or id=3 )
+	 * @throws Exception
+	 */
+	public static String listToSqlStr(List list, String entityName, List param)
+			throws Exception {
+		StringBuffer result = new StringBuffer("");
+		Long objectLong = null;
+		Integer objectInt = null;
+		try {
+			if (list != null && list.size() > 0) {
+				for (int i = 0; i < list.size(); i++) {
+					if (i > 0) {
+						result.append(" or ");
+					}
+					result.append(entityName + "=?");
+					if (list.get(i) instanceof String) {
+						param.add((String) list.get(i));
+					} else {
+						if (list.get(i) instanceof Long) {
+							objectLong = (Long) list.get(i);
+							if (objectLong != null) {
+								param.add(objectLong.longValue());
+							} else {
+								param.add("0");
+							}
+						} else {
+							if (list.get(i) instanceof Integer) {
+								objectInt = (Integer) list.get(i);
+								if (objectInt != null) {
+									param.add(objectInt.intValue());
+								} else {
+									param.add("0");
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result.toString();
+	}
+
+	/**
+	 * 把数组中的id信息输出,组合成sql语句
+	 * 
+	 * @param list
+	 * @param entityName
+	 * @return( id=1 or id=2 or id=3 )
+	 * @throws Exception
+	 */
+	public static String listToSqlStr(List list, String entityName)
+			throws Exception {
+		StringBuffer result = new StringBuffer("");
+		try {
+			if (list != null && list.size() > 0) {
+				int size = list.size();
+				for (int i = 0; i < size; i++) {
+					if (i > 0) {
+						result.append(" or ");
+					}
+					result.append(entityName + "=?");
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result.toString();
+	}
+	
+	/**
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static String[] listToArr(List list) {
+		String[] result = null;
+		if (CollectionUtils.emptyList(list) == true) {
+			int size = list.size();
+			result = new String[size];
+			for (int i = 0; i < size; i++) {
+				result[i] = (String) list.get(i);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static String listToStr(List list, String splitStr) {
+		StringBuffer result = new StringBuffer("");
+		String temp_splitStr = null;
+		if (CollectionUtils.emptyList(list) == true) {
+			if (isEmpty(splitStr) == true) {
+				temp_splitStr = CommonConst.SYS_SPLIT_COLON;
+			} else {
+				temp_splitStr = splitStr;
+			}
+			int size = list.size();
+			for (int i = 0; i < size; i++) {
+				if (i > 0) {
+					result.append(temp_splitStr);
+				}
+				result.append((String) list.get(i));
+			}
+		}
+		return result.toString();
+	}
+
+	
+	
 	/**
 	 * StringBuffer是否为空
 	 * 

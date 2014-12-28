@@ -59,13 +59,21 @@ public class DataTypeUtils {
 		}
 		return true;
 	}
-	
+	/**
+	 * 判断Long对象是否为空,空是指: null 或 0
+	 * 
+	 * @param a_value
+	 * @return
+	 */
+	public static boolean isEmpty(Long str) {
+		if (str == null || str.longValue() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public static boolean isEmpty(Integer value) {
-		return value == null;
-	}
-
-	public static boolean isEmpty(Long value) {
 		return value == null;
 	}
 

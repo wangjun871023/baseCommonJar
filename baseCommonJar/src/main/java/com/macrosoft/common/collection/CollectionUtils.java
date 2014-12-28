@@ -256,4 +256,17 @@ public class CollectionUtils {
 		}
 		list = null;
 	}
+	/**
+	 * 判断list是否大小为0
+	 * 
+	 * @param dataList
+	 * @return
+	 */
+	public static boolean emptyList(List dataList) {
+		boolean result = true;
+		if (dataList != null && dataList.size() > 0) {
+			result = false;
+		}
+		return result;
+	}
 }
