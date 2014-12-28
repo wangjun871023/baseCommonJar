@@ -8,7 +8,7 @@ import com.macrosoft.common.string.StringUtils;
  * 
  * @author 呆呆
  */
-public class PathCodeUtils{
+public class PathCodeUtils {
 
 	private PathCodeUtils() {
 	}
@@ -73,5 +73,11 @@ public class PathCodeUtils{
 					+ resultLineIdStr;
 		}
 		return resultLineIdStr;
+	}
+
+	public static void main(String[] args) {
+		String result = PathCodeUtils.getLineIdBySequenceName("0001",
+				"0001.0002", 4, true);
+		System.out.println(result);// 0001.0003
 	}
 }

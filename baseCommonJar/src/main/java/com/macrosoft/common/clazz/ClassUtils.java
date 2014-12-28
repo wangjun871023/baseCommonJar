@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassUtils {
+	/**
+	 * 获取同一路径下所有子类或接口实现类
+	 * @param cls
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static List<Class<?>> getAllAssignedClass(Class<?> cls)
 			throws IOException, ClassNotFoundException {
 		List classes = new ArrayList();
@@ -30,6 +37,13 @@ public class ClassUtils {
 		return getClasses(new File(url.getFile()), pk);
 	}
 
+	/**
+	 * 包名下的类
+	 * @param pakeage
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static List<Class<?>> getClasses(String pakeage) throws IOException,
 			ClassNotFoundException {
 		String path = pakeage.replace('.', '/');
@@ -40,6 +54,13 @@ public class ClassUtils {
 		return getClasses(new File(url.getFile()), pakeage);
 	}
 
+	/**
+	 * 包名下的类 指定路径
+	 * @param dir
+	 * @param pk
+	 * @return
+	 * @throws ClassNotFoundException
+	 */
 	private static List<Class<?>> getClasses(File dir, String pk)
 			throws ClassNotFoundException {
 		List classes = new ArrayList();
