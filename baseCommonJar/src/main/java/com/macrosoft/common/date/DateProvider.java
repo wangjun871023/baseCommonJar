@@ -1,7 +1,6 @@
 package com.macrosoft.common.date;
 
 import java.util.Date;
-//import com.navinfo.core.utils.CurrentDateProvider;
 
 /**
  * 日期提供者，使用它而不是直接取得系统时间，将方便测试。

@@ -5,6 +5,10 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**
+ * 对象工具类
+ * @author 呆呆 
+ */
 public class ObjectCommonUtil {
 	/**
 	 * 复制对象

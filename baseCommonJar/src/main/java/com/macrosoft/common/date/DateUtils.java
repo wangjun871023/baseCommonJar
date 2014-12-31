@@ -16,10 +16,9 @@ import com.macrosoft.common.string.StringUtils;
 
 public class DateUtils {
 	private static int ONE_DAY_SECOND = 86400;
-
 	private static final TimeZone GMT = TimeZone.getTimeZone("GMT+8:00");
 	private static final String[] SEPARATE = { "-", ":" };
-	private static final long ONE_DAY_TIME = 86400000L;
+	public static final long ONE_DAY_TIME = 86400000L;
 	private static boolean SET_TIMEZONE = false;
 	public static final String FOR_Y = "yyyy";
 	public static final String FOR_YM = "yyyyMM";
@@ -33,40 +32,29 @@ public class DateUtils {
 	private static final SimpleDateFormat DEFAULT_FORMAT = new SimpleDateFormat();
 	private static final SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat(
 			"yyyy", Locale.CHINESE);
-
 	private static final SimpleDateFormat MONTH_FORMAT = new SimpleDateFormat(
 			"yyyyMM", Locale.CHINESE);
-
 	private static final SimpleDateFormat DAY_FORMAT = new SimpleDateFormat(
 			"yyyyMMdd", Locale.CHINESE);
-
 	private static final SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat(
 			"yyyyMMddHH", Locale.CHINESE);
-
 	private static final SimpleDateFormat MINUTE_FORMAT = new SimpleDateFormat(
 			"yyyyMMddHHmm", Locale.CHINESE);
-
 	private static final SimpleDateFormat SECOND_FORMAT = new SimpleDateFormat(
 			"yyyyMMddHHmmss", Locale.CHINESE);
-
 	private static final SimpleDateFormat MILLISECOND_FORMAT = new SimpleDateFormat(
 			"yyyyMMddHHmmssSSS", Locale.CHINESE);
-
 	private static final SimpleDateFormat SEPARATE_DAY_FORMAT = new SimpleDateFormat(
 			"yyyy-MM-dd", Locale.CHINESE);
-
 	private static final SimpleDateFormat SEPARATE_SECOND_FORMAT = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
-
 	private static final DateFormatSymbols SYMBOLS = DateFormatSymbols
 			.getInstance(Locale.CHINESE);
-
 	private static final String[] SYMBOLS_DAYOFMONTH = { "null", "一", "二", "三",
 			"四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五",
 			"十六", "十七", "十八", "十九", "二十", "二十一", "二十二", "二十三", "二十四", "二十五",
 			"二十六", "二十七", "二十八", "二十九", "三十", "三十一" };
 	private static final Random random;
-
 	private static SimpleDateFormat getSimpleDateFormat(String format) {
 		if ((format == null) || ("".equals(format.trim()))) {
 			format = "yyyy-MM-dd HH:mm:ss";

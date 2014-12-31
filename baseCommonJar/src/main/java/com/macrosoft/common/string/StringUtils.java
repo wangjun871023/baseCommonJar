@@ -3,6 +3,7 @@ package com.macrosoft.common.string;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,8 +11,166 @@ import com.macrosoft.common.base64.Base64Utils;
 import com.macrosoft.common.collection.CollectionUtils;
 import com.macrosoft.common.constant.CommonConst;
 import com.macrosoft.common.log.LoggerUtils;
+import com.macrosoft.common.reflection.ReflectionUtils;
 
 public class StringUtils {
+	
+
+	public static String filterStr(String str) {
+		StringBuffer buffer = new StringBuffer();
+		String filter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if ((c < '0') || (c > '9')) {
+				for (int j = 0; j < 26; j++) {
+					char cc = filter.charAt(j);
+					if (cc == c)
+						buffer.append(c);
+				}
+			} else {
+				buffer.append(c);
+			}
+		}
+		return buffer.toString();
+	}
+	public static String getFilterText(String src) {
+		String str = src.trim();
+		String str1 = replace(str, "&#8220;", "\"");
+		String str2 = replace(str1, "&#8221;", "\"");
+		String str3 = replace(str2, "&#183;", ".");
+		return str3;
+	}
+	public static String fillStr(String src, int byte_len) {
+		String fill_str = "";
+		StringBuffer tempb = new StringBuffer();
+		int temp_len = 0;
+		int src_len = src.length();
+		char zero = '\000';
+		if (src_len < byte_len) {
+			temp_len = byte_len - src_len;
+			for (int i = 0; i < temp_len; i++) {
+				tempb.append(zero);
+			}
+			fill_str = src + tempb.toString();
+		} else {
+			fill_str = src;
+		}
+		return fill_str;
+	}
+
+
+	/**
+	 * 分割字符串
+	 * @param src
+	 * @param sep
+	 * @return
+	 */
+	public static String[] splite(String src, String sep) {
+		Vector v = new Vector();
+		
+		int fromIndex = 0;
+		int index;
+		while ((index = src.indexOf(sep, fromIndex)) != -1) {
+			v.addElement(src.substring(fromIndex, index));
+			fromIndex = index + sep.length();
+		}
+		v.addElement(src.substring(fromIndex, src.length()));
+		String[] result = new String[v.size()];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = ((String) v.elementAt(i));
+		}
+		return result;
+	}
+
+	public static String[] splite(String src, String sep, String sep_code) {
+		String[] result = splite(src, sep);
+		replace(result, sep_code, sep);
+		return result;
+	}
+ 
+	public static void replace(String[] src, String oldStr, String newStr) {
+		for (int i = 0; i < src.length; i++)
+			src[i] = replace(src[i], oldStr, newStr);
+	}
+
+	/**
+	 * 得到路径中的参数值
+	 * @param para
+	 * @param src
+	 * @return
+	 */
+	public static String getParaVal(String para, String src) {
+		String paraval = null;
+		String tempPara = para;
+		int s1 = 0;
+		int s2 = 0;
+		int len = 0;
+		int httplen = 0;
+
+		if ((tempPara == null) || (src == null))
+			return "";
+		tempPara = tempPara + "=";
+		len = tempPara.length();
+		httplen = src.length();
+		if (httplen == 0)
+			return "";
+		if (len == 0) {
+			return "";
+		}
+		s1 = src.indexOf(tempPara);
+		if (s1 == -1)
+			return "";
+		s2 = src.indexOf(38, s1);
+		if (s2 == -1) {
+			paraval = src.substring(s1 + len);
+		} else {
+			paraval = src.substring(s1 + len, s2);
+		}
+
+		return paraval;
+	}
+
+	/**
+	 *  得到路径中的参数值 
+	 * @param para
+	 * @param src
+	 * @param sep
+	 * @return
+	 */
+	public static String getParaValEx(String para, String src, char sep) {
+		String paraval = null;
+		String tempPara = para;
+		int s1 = 0;
+		int s2 = 0;
+		int len = 0;
+		int httplen = 0;
+
+		if ((tempPara == null) || (src == null))
+			return "";
+		tempPara = tempPara + "=";
+		len = tempPara.length();
+		httplen = src.length();
+		if (httplen == 0)
+			return "";
+		if (len == 0) {
+			return "";
+		}
+		s1 = src.indexOf(tempPara);
+		if (s1 == -1)
+			return "";
+		s2 = src.indexOf(sep, s1);
+		if (s2 == -1) {
+			paraval = src.substring(s1 + len);
+		} else {
+			paraval = src.substring(s1 + len, s2);
+		}
+
+		return paraval;
+	}
+
+	
+	
 	
 	/**
 	 * 
@@ -36,6 +195,19 @@ public class StringUtils {
 		return result;
 	}
 
+	/**
+	 * 转换字符串到相应类型.
+	 * 
+	 * @param value 待转换的字符串.
+	 * @param toType 转换目标类型.
+	 */
+	public static Object convertStringToObject(String value, Class<?> toType) {
+		try {
+			return org.apache.commons.beanutils.ConvertUtils.convert(value, toType);
+		} catch (Exception e) {
+			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
+		}
+	}
 
 	/**
 	 * 把数组中的id信息输出,组合成sql语句
