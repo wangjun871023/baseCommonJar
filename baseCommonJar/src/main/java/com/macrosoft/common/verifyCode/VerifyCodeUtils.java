@@ -16,11 +16,16 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import com.macrosoft.common.constant.CommonConst;
 import com.macrosoft.common.log.LoggerUtils;
 
+/**
+ * 验证码工具类
+ * @author 呆呆
+ *
+ */
 public class VerifyCodeUtils {
-	// 使用到Algerian字体，系统里没有的话需要安装字体，字体只显示大写，去掉了1,0,i,o几个容易混淆的字符
-	public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+
 	private static Random random = new Random();
 
 	/**
@@ -31,7 +36,7 @@ public class VerifyCodeUtils {
 	 * @return
 	 */
 	public static String generateVerifyCode(int verifySize) {
-		return generateVerifyCode(verifySize, VERIFY_CODES);
+		return generateVerifyCode(verifySize, CommonConst.VERIFY_CODES);
 	}
 
 	/**
@@ -43,9 +48,9 @@ public class VerifyCodeUtils {
 	 *            验证码字符源
 	 * @return
 	 */
-	public static String generateVerifyCode(int verifySize, String sources) {
+	 private static String generateVerifyCode(int verifySize, String sources) {
 		if (sources == null || sources.length() == 0) {
-			sources = VERIFY_CODES;
+			sources = CommonConst.VERIFY_CODES;
 		}
 		int codesLen = sources.length();
 		Random rand = new Random(System.currentTimeMillis());
@@ -99,7 +104,7 @@ public class VerifyCodeUtils {
 	 * @param code
 	 * @throws IOException
 	 */
-	public static void outputImage(int w, int h, File outputFile, String code)
+	private static void outputImage(int w, int h, File outputFile, String code)
 			throws IOException {
 		if (outputFile == null) {
 			return;
@@ -129,7 +134,7 @@ public class VerifyCodeUtils {
 	 * @param code
 	 * @throws IOException
 	 */
-	public static void outputImage(int w, int h, OutputStream os, String code)
+	private static void outputImage(int w, int h, OutputStream os, String code)
 			throws IOException {
 		int verifySize = code.length();
 		BufferedImage image = new BufferedImage(w, h,
