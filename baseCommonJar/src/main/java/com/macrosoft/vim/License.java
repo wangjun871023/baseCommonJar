@@ -9,10 +9,8 @@ public class License {
      * @throws Exception  
      */  
     public static void main(String[] args) throws Exception {  
-   
         CheckLicenseFile licenseFile = new CheckLicenseFile();  
         String valueString = licenseFile.encrypt("test", "test");  
         System.out.println(valueString);  
     }  
-   
 }  
